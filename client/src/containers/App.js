@@ -1,6 +1,6 @@
-import Header from './containers/Header';
+import Header from '../components/Header';
 import React from 'react';
-import Login from './components/Login';
+import Login from '../components/Login';
 
 
 
