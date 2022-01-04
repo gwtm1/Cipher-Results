@@ -1,10 +1,15 @@
+import Header from './containers/Header';
 import React from 'react';
 import Login from './components/Login';
 
+
+
 function App() {
   return (
-    <div>
+    <div className="App">
+      <header><Header/></header>   
       <Login />
+      
     </div>
   );
 }
