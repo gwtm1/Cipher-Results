@@ -3,7 +3,7 @@
     display: flex;
     justify-content: end;
 }
-
-.header{
-    background-color: blue;
+#header{
+    width:100%;
+    background-color: burlywood;
 }
