@@ -7,10 +7,10 @@ import '../css/Header.css';
 
 function Header () {
     return (
-        <header className='header'>
-            <Navbar bg="light" expand="lg">
-              <Container>
-                <Navbar.Brand href="#home">Cipher Results</Navbar.Brand>
+        <header >
+            <Navbar bg="light" expand="lg" >
+              <Container id='header'>
+                <Navbar.Brand href="/">Cipher Results</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                   <Nav className='navLinks'>
