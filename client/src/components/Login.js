@@ -25,14 +25,26 @@ const Login = () => {
     setPassword(event.target.value);
   };
   return (
-      <Row className='row'>
+      <Row className='mainrow'>
         <Col>
-          <div className="formBackground" >
             <form onSubmit={(event) => formSubmitHandler(event)} className='widget'>
-              <div className='formTitle'>
+
+              <Container>
+                <Row className='formTitle'>
+                  <Col><h1>Login</h1></Col>
+                  <Col></Col>
+                  <Col></Col>
+                  <Col className='Logo'>
+                    <img alt="Logo" width="3rem" height="3rem" src='..\assets\unnamed.jpg' />
+                  </Col>
+                </Row>
+              </Container>
+
+              <div className='formDescription'>
                 This is real app with Node.js backend - use
                 <b>"admin@cipherresults.com/password</b> to login.
               </div>
+
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -51,18 +63,21 @@ const Login = () => {
                   onChange={onPasswordChange}
                 />
               </Form.Group>
+
               <Button variant="primary" type="submit">
                 Submit
               </Button>
+
               {/* <Link to="/signup">Don’t have an account? Sign Up here</Link> */}
+
               <p className="dividing-line my-3">&#8195;Or&#8195;</p>
-              <div className="signup">
+              <div className="signupText">
                 Don't have an account? Sign Up Here.
               </div>
-            </form>
-          </div>
 
+            </form>
         </Col>
+
         <Col>
           <div className='RightImage' />
         </Col>

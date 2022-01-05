@@ -1,36 +1,31 @@
-.formBackground {
-  border: 2px solid rgb(22, 235, 32);
-  padding: 3rem;
-  height: auto;
-  background-color: rgb(109, 88, 102);
-}
-
-.row{
+.mainrow{
   width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  overflow:hidden;
+  min-height:100%;
 }
 
 .widget {
   background-color: base-light-gray;
-  border: 2px solid rgb(223, 21, 21);
+  border: 2px solid rgb(16, 206, 42);
   border-radius: 4px;
-  margin: 8rem 8rem 8rem 8rem;
-  padding:2rem;
+  padding:9rem;
   position: relative;
   display: block;
   width: 100%;
-  height: auto;
-  margin: 1rem;
   background-color: white;
 }
 
-.RightImage {
-  background-image: url("../assets/loginImage.svg");
-  background-repeat: no-repeat;
-  background-position: right;
-  width: 100%;
-  height: 125%;
-}
 .formTitle {
+  margin: 1rem;
+}
+/* .header > .logo {
+  
+} */
+
+.formDescription {
   border: 2px solid rgb(236, 242, 243);
   border-radius: 2px;
   padding: 1rem;
@@ -51,10 +46,29 @@
 .dividing-line:after {
 content: "";
 flex: 1 1;
-border-bottom: 1px solid red;
+border-bottom: 1px solid black;
 margin: auto;
 }
 
-.signup {
-  color: violet;
+.signupText {
+  color: rgb(148, 48, 148);
 }
+
+
+.RightImage {
+  border: 2px solid rgb(99, 21, 224);
+
+  background-image: url("../assets/loginImage.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+}
+/* 
+.Logo{
+  background-image: url('../assets/unnamed.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 75%;
+  height: auto;
+} */
