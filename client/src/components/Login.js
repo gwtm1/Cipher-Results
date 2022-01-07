@@ -5,26 +5,21 @@ import "../css/Login.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import React, { useState } from "react";
 import unnamed from "../assets/unnamed.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import css from "../css/Login.css";
 import { Nav } from "react-bootstrap";
 
 const Login = () => {
-  // const navigate = useNavigate()
-  // const [state, setState] = useState({
-  //   email: 'admin@cipherresults.com',
-  //   password: 'password',
-  // })
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(true);
   // const [errorMsg, setErrorMsg] = useState("");
 
-  const formSubmitHandler = (event) => {};
-  const onEmailChange = (event) => {
-    setEmail(event.target.value);
+  const onrollNumberChange = (event) => {
+    setRollNumber(event.target.value);
   };
-
+  
   const onPasswordChange = (event) => {
     setPassword(event.target.value);
   };
@@ -32,7 +27,30 @@ const Login = () => {
   const onTabChange = (state) => {
     setIsStudent(state);
   };
+  const formSubmitHandler = () => {
+    fetch("/login", {
+      method: "post",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          rollNumber,
+          password
+      })
+    }).then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if (data.error) {
+                alert(data.error)
+            } else {
+                navigate('/')
+            }
+        }).catch(err => {
+            console.log(err)
+        })
+  }
 
+  
   return (
     <Row className="mainrow">
       <Col style={{ marginLeft: "1.5rem" }} className="widget">
@@ -52,15 +70,15 @@ const Login = () => {
           </Row>
         </Container>
         {isStudent ? (
-          <form onSubmit={(event) => formSubmitHandler(event)} className="form">
+          <form  className="form">
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicRollNumber">
               <Form.Label>Roll Number</Form.Label>
               <Form.Control
                 type="string"
                 placeholder="Enter Roll Number"
-                value={email}
-                onChange={onEmailChange}
+                value={rollNumber}
+                onChange={onrollNumberChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -78,7 +96,7 @@ const Login = () => {
               <Form.Control type="file" />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={()=>formSubmitHandler()}>
               Submit
             </Button>
 
@@ -90,13 +108,13 @@ const Login = () => {
         ) : (
           <form onSubmit={(event) => formSubmitHandler(event)} className="form">
             
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasicrollNumber">
+              <Form.Label>rollNumber address</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={onEmailChange}
+                type="rollNumber"
+                placeholder="Enter rollNumber"
+                value={rollNumber}
+                onChange={onrollNumberChange}
               />
             </Form.Group>
 

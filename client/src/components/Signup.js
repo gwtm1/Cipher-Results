@@ -9,12 +9,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(true);
   const [isOptsent, setOtpsent] = useState(false);
+  const [rollNumber, setRollNumber] = useState("");
 
   const formSubmitHandler = (event) => {};
   const onEmailChange = (event) => {
     setEmail(event.target.value);
   };
-
+  const onrollNumberChange = (event) => {
+    setRollNumber(event.target.value);
+  };
   const onPasswordChange = (event) => {
     setPassword(event.target.value);
   };
@@ -44,13 +47,22 @@ const Login = () => {
         {isStudent ? (
           <form onSubmit={(event) => formSubmitHandler(event)} className="form">
             <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="string"
+                placeholder="Enter E-mail "
+                value={email}
+                onChange={onEmailChange}
+              />
+              <Form.Group className="mb-3" controlId="formBasicRollNumber">
               <Form.Label>Roll Number</Form.Label>
               <Form.Control
                 type="string"
                 placeholder="Enter Roll Number"
-                value={email}
-                onChange={onEmailChange}
+                value={rollNumber}
+                onChange={onrollNumberChange}
               />
+            </Form.Group>
             </Form.Group>
             {isOptsent ? (
                 <Form.Group className="mb-3" controlId="formBasicPassword">

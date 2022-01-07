@@ -14,7 +14,7 @@ const Header = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="navLinks">
-              {props.isloggedin ? (
+              {props.isloggedIn ? (
                 <>
                   <Nav.Link onClick={() => props.logout(false)} as={Link} to="/">
                     Logout
@@ -22,7 +22,7 @@ const Header = (props) => {
                 </>
               ) : (
                 <>
-                  <Nav.Link onClick={() => props.logout(true)} as={Link} to="/signup">
+                  <Nav.Link  as={Link} to="/signup">
                     Signup
                   </Nav.Link>
                   <Nav.Link as={Link} to="/login">Login</Nav.Link>
