@@ -5,7 +5,7 @@ import React from 'react';
 import { Navbar,Container,Nav } from 'react-bootstrap';
 import '../css/Header.css';
 
-function Header () {
+const Header = React.memo((props) => {
     return (
         <header >
             <Navbar bg="light" expand="lg" >
@@ -14,8 +14,14 @@ function Header () {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                   <Nav className='navLinks'>
-                    <Nav.Link href="/signup">Signup</Nav.Link>
+                  {props.isloggedin? (<>
+                    <Nav.Link onClick={()=>props.logout()} href="/">Logout</Nav.Link>
                     <Nav.Link href="/login">Login</Nav.Link>
+                  </>):(<>
+                    <Nav.Link onClick={()=>props.logout()} href="/signup">Signup</Nav.Link>
+                    <Nav.Link href="/login">Login</Nav.Link>
+                  </>) }
+                    
                     
                   </Nav>
                 </Navbar.Collapse>
@@ -24,7 +30,7 @@ function Header () {
          
         </header>
     )
-}
+})
 
 
 

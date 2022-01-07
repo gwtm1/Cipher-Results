@@ -32,6 +32,7 @@ const Signup = ()=> {
                   <Col><h1>SignUp</h1></Col>
                   <Col></Col>
                   <Col></Col>
+                  <Col></Col>
                   <Col >
                     <img alt="Logo" className='Logo' src={unnamed} />
                   </Col>
@@ -75,12 +76,8 @@ const Signup = ()=> {
                 Submit
               </Button>
 
-              <Link to="/signup">Don’t have an account? Sign Up here</Link>
-
               <p className="dividing-line my-3">&#8195;Or&#8195;</p>
-              <div className="signupText">
-                Don't have an account? Sign Up Here.
-              </div>
+              <Link className="signupText" to="/signup">Already have an account? Login here</Link>
 
             </form>
             </Col>

@@ -22,16 +22,17 @@ const Routing = () => {
 
 function App() {
 
-  // const [isloggedIn,setIsloggedIn] = useState(false);
+  const [isloggedIn,setIsloggedIn] = useState(false);
   
 
-  // const logout = ()=>{
-  //   isloggedIn ? setIsloggedIn(false) : setIsloggedIn(true)
-  // }
+  const logout = ()=>{
+    console.log('hi');
+    isloggedIn ? setIsloggedIn(false) : setIsloggedIn(true)
+  }
   return (
     <div className="App">
       <BrowserRouter>
-        <Header /> 
+        <Header isloggedIn={isloggedIn} logout={logout} /> 
         <Routing/>
       </BrowserRouter>
     </div>
