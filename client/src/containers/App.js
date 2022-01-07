@@ -22,12 +22,13 @@ const Routing = () => {
 
 function App() {
 
-  const [isloggedIn,setIsloggedIn] = useState(false);
+  const [isloggedIn,setIsloggedIn] = useState(true);
   
 
-  const logout = ()=>{
-    console.log('hi');
-    isloggedIn ? setIsloggedIn(false) : setIsloggedIn(true)
+  const logout = (state)=>{
+    console.log(state);
+    setIsloggedIn(state);
+    console.log(isloggedIn);
   }
   return (
     <div className="App">
