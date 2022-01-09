@@ -1,0 +1,21 @@
+/* element.style {
+  width: 50%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  overflow:hidden;
+  min-height:100%;
+} */
+
+.container{
+  display:grid;
+  justify-content: center;
+  align-items:flex-end;
+}
+
+.widget {
+    width:125%;
+    margin-top: 25%;
+    padding: 2rem;
+    border-color: black;
+}

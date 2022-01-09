@@ -4,9 +4,9 @@ import "../css/Login.css";
 // import { Button, FormGroup, FormText, Input } from "reactstrap";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import React, { useState } from "react";
-import unnamed from "../assets/unnamed.jpg";
+// import unnamed from "../assets/unnamed.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import css from "../css/Login.css";
+// import css from "../css/Login.css";
 import { Nav } from "react-bootstrap";
 
 const Login = () => {
@@ -91,10 +91,7 @@ const Login = () => {
                 onChange={onPasswordChange}
               />
             </Form.Group>
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Hash of Roll Number</Form.Label>
-              <Form.Control type="file" />
-            </Form.Group>
+            
 
             <Button variant="primary" type="submit" onClick={()=>formSubmitHandler()}>
               Submit

@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import Login from '../components/Login';
 import Homepage from '../components/Homepage';
 import Signup from '../components/Signup';
+import Results from '../components/Results'
+import Upload from '../components/Upload'
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 
 
@@ -15,6 +17,8 @@ const Routing = () => {
       <Route exact path='/' element={<Homepage />}/> 
       <Route exact path='/signup' element={<Signup />}/>
       <Route exact path='/login' element={<Login />}/>
+      <Route exact path='/results' element={<Results />}/>
+      <Route exact path='/upload' element={<Upload />}/>
     </Routes>
   )
 }
