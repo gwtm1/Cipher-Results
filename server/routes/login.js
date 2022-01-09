@@ -1,7 +1,16 @@
+import express from 'express';
 
-const logingIn = (req,res)=>{
-    res.json("Hi there!!");
-}
+const router = express.Router();
 
+router.get('/', );
+router.post('/', );
 
-module.exports = {logingIn};
+router.post("/", (req, res) => {
+    try {
+
+    } catch(error) {
+        
+    }
+});
+
+export default router;

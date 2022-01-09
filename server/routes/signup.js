@@ -1,6 +1,14 @@
+import express from "express";
 
-const signingUp = (req,res)=>{
-    
-}
+const router = express.Router();
 
-module.exports = { signingUp }
+router.post("/", (req, res) => {
+    try {
+
+    } catch(error) {
+        
+    }
+
+});
+
+export default router;
