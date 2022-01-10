@@ -1,6 +1,6 @@
 import { check, validationResult } from "express-validator";
 
-exports.validateStudent = [
+export const validateStudent = [
   check("rollnumber")
     .trim()
     .not()
@@ -18,7 +18,7 @@ exports.validateStudent = [
     .withMessage("Password must be 8 to 15 characters long!"),
 ];
 
-exports.validateAdmin = [
+export const validateAdmin = [
   check("email").normalizeEmail().isEmail().withMessage("Email is invalid!"),
   check("password")
     .trim()
@@ -29,7 +29,7 @@ exports.validateAdmin = [
     .withMessage("Password must be 8 to 15 characters long!"),
 ];
 
-exports.validate = (req, res, next) => {
+export const validate = (req, res, next) => {
     const errors = validationResult(req).array();
     if(!errors.length) return next()
 
