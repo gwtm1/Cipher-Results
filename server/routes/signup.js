@@ -1,15 +1,10 @@
 import express from "express";
-import { signingUp } from "../controllers/signup.js";
+import { adminSigningUp, studentSigningUp } from "../controllers/signup.js";
+import { validateAdmin, validateStudent, validate } from "../middlewares/validator"
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
-    try {
-        signingUp(req,res);
-    } catch(error) {
-        console.log(error.message)
-    }
-
-});
+router.post("/admin", validateAdmin, validate, adminSigningUp);
+router.post("/student", validateStudent, validate, studentSigningUp);
 
 export default router;

@@ -1,17 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from "dotenv";
+import cors from 'cors';
+import signup from "./routes/signup.js";
+import login from "./routes/login.js";
 
-const { MongoClient } = require('mongodb');
-process.env.mongo_details = 'jithendra:jithendra71'
-const mongodb_url = `mongodb+srv://${process.env.mongo_details}@cipher-results.5uw4z.mongodb.net/`;
-
-
-const cors = require('cors')
-
-const signup = require("./routes/signup")
-const login = require('./routes/login')
-
+// process.env.mongo_details = 'jithendra:jithendra71'
+// const mongodb_url = `mongodb+srv://${process.env.mongo_details}@cipher-results.5uw4z.mongodb.net/`;
+const mongodb_url = `mongodb+srv://jithendra:jithendra71@cipher-results.5uw4z.mongodb.net/`;
 const PORT = process.env.PORT || 3000
 
 mongoose
@@ -22,13 +17,14 @@ mongoose
     const app = express();
     app.use(express.json())
     app.use(cors())
-    app.use("/login", login);
     app.use("/signup", signup);
+    app.use("/login", login);
 
     app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`));c 
   })
   .catch((error) => {
     console.log(`${error} did not connect`);
   });
+
 
 mongoose.set('useFindAndModify', false);
