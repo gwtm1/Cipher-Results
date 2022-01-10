@@ -3,11 +3,13 @@ import mongoose from 'mongoose';
 const studentLoginSchema = mongoose.Schema({
     rollnumber:{
         type: String,
-        required : true
+        required : true,
+        trim: true,
     },
     email:{
         type : String,
         required : true,
+        trim: true,
         unique: true
     },
     password:{

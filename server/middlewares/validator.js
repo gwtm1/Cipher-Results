@@ -1,13 +1,6 @@
 import { check, validationResult } from "express-validator";
 
-export const validateStudent = [
-  check("rollnumber")
-    .trim()
-    .not()
-    .isEmpty()
-    .withMessage("Roll Number is missing!")
-    .isLength({ min: 11, max: 11 })
-    .withMessage("Roll is not in specified format!"),
+export const validateAdmin = [
   check("email").normalizeEmail().isEmail().withMessage("Email is invalid!"),
   check("password")
     .trim()
@@ -18,7 +11,14 @@ export const validateStudent = [
     .withMessage("Password must be 8 to 15 characters long!"),
 ];
 
-export const validateAdmin = [
+export const validateStudent = [
+  check("rollnumber")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Roll Number is missing!")
+    .isLength({ min: 11, max: 11 })
+    .withMessage("Roll is not in specified format!"),
   check("email").normalizeEmail().isEmail().withMessage("Email is invalid!"),
   check("password")
     .trim()

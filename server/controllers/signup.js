@@ -11,7 +11,7 @@ export const adminSigningUp = async (req, res) => {
       password,
     });
     await newadmin.save();
-    res.send(newadmin);
+    res.json(newadmin);
 
   } catch (error) {
     console.log(error.message);
@@ -28,7 +28,7 @@ export const studentSigningUp = async (req, res) => {
       password,
     });
     await newstudent.save();
-    res.send(newstudent);
+    res.json(newstudent);
     
   } catch (error) {
     console.log(error.message);
