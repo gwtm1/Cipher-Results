@@ -14,13 +14,13 @@ const Login = () => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(true);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   // const [errorMsg, setErrorMsg] = useState("");
 
   const onrollNumberChange = (event) => {
     setRollNumber(event.target.value);
   };
-  
+
   const onEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -33,53 +33,55 @@ const Login = () => {
     setIsStudent(state);
   };
   const formSubmitHandler = () => {
-    if(isStudent){
+    if (isStudent) {
       fetch("/login/student", {
         method: "post",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            rollNumber,
-            password
+          rollNumber,
+          password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.error) {
+            alert(data.error);
+          } else {
+            navigate("/viewresults");
+          }
         })
-      }).then(res => res.json())
-          .then(data => {
-              console.log(data)
-              if (data.error) {
-                  alert(data.error)
-              } else {
-                  navigate('/student')
-              }
-          }).catch(err => {
-              console.log(err)
-          })
-    }
-    else {
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
       fetch("/login/admin", {
         method: "post",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            email,
-            password
+          email,
+          password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.error) {
+            alert(data.error);
+          } else {
+            navigate("/uploadresults");
+          }
         })
-      }).then(res => res.json())
-          .then(data => {
-              console.log(data)
-              if (data.error) {
-                  alert(data.error)
-              } else {
-                  navigate('/admin')
-              }
-          }).catch(err => {
-              console.log(err)
-          })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }
+  };
 
-  
   return (
     <Row className="mainrow">
       <Col style={{ marginLeft: "1.5rem" }} className="widget">
@@ -99,11 +101,11 @@ const Login = () => {
           </Row>
         </Container>
         {isStudent ? (
-          <form  className="form">
-
+          <form className="form">
             <Form.Group className="mb-3" controlId="formBasicRollNumber">
               <Form.Label>Roll Number</Form.Label>
               <Form.Control
+                className="inputs"
                 type="string"
                 placeholder="Enter Roll Number"
                 value={rollNumber}
@@ -120,9 +122,12 @@ const Login = () => {
                 onChange={onPasswordChange}
               />
             </Form.Group>
-            
 
-            <Button variant="primary" type="submit" onClick={()=>formSubmitHandler()}>
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={() => formSubmitHandler()}
+            >
               Submit
             </Button>
 
@@ -133,10 +138,10 @@ const Login = () => {
           </form>
         ) : (
           <form onSubmit={(event) => formSubmitHandler(event)} className="form">
-            
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
+                className="inputs"
                 type="email"
                 placeholder="Enter college Email"
                 value={email}
@@ -147,6 +152,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                className="inputs"
                 type="password"
                 placeholder="Password"
                 value={password}

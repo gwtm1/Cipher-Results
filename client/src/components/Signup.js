@@ -5,8 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import "./Signup";
 const Login = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rollNumber, setRollNumber] = useState("");
@@ -14,50 +13,53 @@ const Login = () => {
   const [isOptsent, setOtpsent] = useState(false);
 
   const formSubmitHandler = (event) => {
-    if(isStudent) {
+    if (isStudent) {
       fetch("/signup/student", {
         method: "post",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            rollNumber,
-            email,
-            password
+          rollNumber,
+          email,
+          password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.error) {
+            alert(data.error);
+          } else {
+            navigate("/viewresults");
+          }
         })
-      }).then(res => res.json())
-          .then(data => {
-              console.log(data)
-              if (data.error) {
-                  alert(data.error)
-              } else {
-                  navigate('/student')
-              }
-          }).catch(err => {
-              console.log(err)
-          })
-    }
-    else {
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
       fetch("/signup/admin", {
         method: "post",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            email,
-            password
+          email,
+          password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.error) {
+            alert(data.error);
+          } else {
+            navigate("/uploadresults");
+          }
         })
-      }).then(res => res.json())
-          .then(data => {
-              console.log(data)
-              if (data.error) {
-                  alert(data.error)
-              } else {
-                  navigate('/admin')
-              }
-          }).catch(err => {
-              console.log(err)
-          })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
   const onEmailChange = (event) => {
@@ -94,34 +96,52 @@ const Login = () => {
         </Container>
         {isStudent ? (
           <form onSubmit={(event) => formSubmitHandler(event)} className="form">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="string"
-                placeholder="Enter E-mail "
-                value={email}
-                onChange={onEmailChange}
-              />
-              <Form.Group className="mb-3" controlId="formBasicRollNumber">
+            <Form.Group className="mb-3" controlId="formBasicRollNumber">
               <Form.Label>Roll Number</Form.Label>
               <Form.Control
+                className="inputs"
                 type="string"
                 placeholder="Enter Roll Number"
                 value={rollNumber}
                 onChange={onrollNumberChange}
               />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                className="inputs"
+                type="string"
+                placeholder="Enter E-mail "
+                value={email}
+                onChange={onEmailChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                className="inputs"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={onPasswordChange}
+              />
             </Form.Group>
             {isOptsent ? (
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
               </Form.Group>
             ) : (
-                <></>
+              <></>
             )}
 
-            <Button variant="primary" type="submit" onClick={()=> {setOtpsent(true)}}>
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={() => {
+                setOtpsent(true);
+              }}
+            >
               Submit
             </Button>
 
@@ -135,6 +155,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
+                className="inputs"
                 type="email"
                 placeholder="Enter email"
                 value={email}
@@ -145,6 +166,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                className="inputs"
                 type="password"
                 placeholder="Password"
                 value={password}

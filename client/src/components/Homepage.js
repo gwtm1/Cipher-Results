@@ -1,20 +1,7 @@
-/* eslint-disable no-unused-vars */
-import { withRouter, Redirect, Link } from "react-router-dom";
-import React, { useState } from "react";
-import {
-    Container,
-    Row,
-    Col,
-    Button,
-    FormGroup,
-    FormText,
-    Input,
-  } from "reactstrap";
-
 const Homepage = () => {
     return (
         <div>
-
+            <img alt="homepage" src="../assets/homepage.jpeg" width="1000px" height="1000px"/>
         </div>
       );
 }
