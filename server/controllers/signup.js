@@ -14,7 +14,7 @@ export const adminSigningUp = async (req, res) => {
       password: hashedPassword,
     });
     await newadmin.save();
-    res.send(newadmin);
+    res.json(newadmin);
 
   } catch (error) {
     res.send(error.message);
@@ -33,7 +33,7 @@ export const studentSigningUp = async (req, res) => {
       password: hashedPassword,
     });
     await newstudent.save();
-    res.send(newstudent);
+    res.json(newstudent);
     
   } catch (error) {
     res.send(error.message);
