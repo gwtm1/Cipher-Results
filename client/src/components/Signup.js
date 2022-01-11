@@ -1,17 +1,65 @@
 import "../css/Login.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import "./Signup";
 const Login = () => {
+
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rollNumber, setRollNumber] = useState("");
   const [isStudent, setIsStudent] = useState(true);
   const [isOptsent, setOtpsent] = useState(false);
-  const [rollNumber, setRollNumber] = useState("");
 
-  const formSubmitHandler = (event) => {};
+  const formSubmitHandler = (event) => {
+    if(isStudent) {
+      fetch("/signup/student", {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            rollNumber,
+            email,
+            password
+        })
+      }).then(res => res.json())
+          .then(data => {
+              console.log(data)
+              if (data.error) {
+                  alert(data.error)
+              } else {
+                  navigate('/student')
+              }
+          }).catch(err => {
+              console.log(err)
+          })
+    }
+    else {
+      fetch("/signup/admin", {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email,
+            password
+        })
+      }).then(res => res.json())
+          .then(data => {
+              console.log(data)
+              if (data.error) {
+                  alert(data.error)
+              } else {
+                  navigate('/admin')
+              }
+          }).catch(err => {
+              console.log(err)
+          })
+    }
+  };
   const onEmailChange = (event) => {
     setEmail(event.target.value);
   };

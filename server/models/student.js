@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const studentLoginSchema = mongoose.Schema({
+const studentSchema = mongoose.Schema({
     rollnumber:{
         type: String,
         required : true
@@ -16,6 +16,6 @@ const studentLoginSchema = mongoose.Schema({
     }    
 })
 
-var studentLogin = mongoose.model('StudentLogin', studentLoginSchema);
+var Students = mongoose.model('Students', studentSchema);
 
-export default studentLogin;
+export default Students;

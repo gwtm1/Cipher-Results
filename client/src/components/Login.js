@@ -14,12 +14,17 @@ const Login = () => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(true);
+  const [email, setEmail] = useState('');
   // const [errorMsg, setErrorMsg] = useState("");
 
   const onrollNumberChange = (event) => {
     setRollNumber(event.target.value);
   };
   
+  const onEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
   const onPasswordChange = (event) => {
     setPassword(event.target.value);
   };
@@ -28,26 +33,50 @@ const Login = () => {
     setIsStudent(state);
   };
   const formSubmitHandler = () => {
-    fetch("/login", {
-      method: "post",
-      headers: {
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-          rollNumber,
-          password
-      })
-    }).then(res => res.json())
-        .then(data => {
-            console.log(data)
-            if (data.error) {
-                alert(data.error)
-            } else {
-                navigate('/')
-            }
-        }).catch(err => {
-            console.log(err)
+    if(isStudent){
+      fetch("/login/student", {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            rollNumber,
+            password
         })
+      }).then(res => res.json())
+          .then(data => {
+              console.log(data)
+              if (data.error) {
+                  alert(data.error)
+              } else {
+                  navigate('/student')
+              }
+          }).catch(err => {
+              console.log(err)
+          })
+    }
+    else {
+      fetch("/login/admin", {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email,
+            password
+        })
+      }).then(res => res.json())
+          .then(data => {
+              console.log(data)
+              if (data.error) {
+                  alert(data.error)
+              } else {
+                  navigate('/admin')
+              }
+          }).catch(err => {
+              console.log(err)
+          })
+    }
   }
 
   
@@ -105,13 +134,13 @@ const Login = () => {
         ) : (
           <form onSubmit={(event) => formSubmitHandler(event)} className="form">
             
-            <Form.Group className="mb-3" controlId="formBasicrollNumber">
-              <Form.Label>rollNumber address</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
               <Form.Control
-                type="rollNumber"
-                placeholder="Enter rollNumber"
-                value={rollNumber}
-                onChange={onrollNumberChange}
+                type="email"
+                placeholder="Enter college Email"
+                value={email}
+                onChange={onEmailChange}
               />
             </Form.Group>
 
