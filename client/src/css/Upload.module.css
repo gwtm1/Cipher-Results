@@ -1,0 +1,12 @@
+.container {
+  display: grid;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.widget {
+  width: 125%;
+  margin-top: 25%;
+  padding: 2rem;
+  border-color: black;
+}

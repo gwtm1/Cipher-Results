@@ -1,11 +1,11 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import "../css/Result.css";
+import css from "../css/Results.module.css";
 
 const Results = () => {
   return (
-    <div className="container">
-      <Form className="widget">
+    <div className={css.container}>
+      <Form className={css.widget}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Roll Number</Form.Label>
           <Form.Control

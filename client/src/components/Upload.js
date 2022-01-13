@@ -1,11 +1,11 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import "../css/Upload.css";
+import css from "../css/Upload.module.css";
 
 const Upload = () => {
   return (
-    <div className="container">
-      <Form className="widget">
+    <div className={css.container}>
+      <Form className={css.widget} >
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Batch Name</Form.Label>
           <Form.Control

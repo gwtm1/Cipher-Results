@@ -1,12 +1,7 @@
-/* eslint-disable no-unused-vars */
-
-import "../css/Login.css";
-// import { Button, FormGroup, FormText, Input } from "reactstrap";
+import css from "../css/Login.module.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import React, { useState } from "react";
-// import unnamed from "../assets/unnamed.jpg";
 import { Link, useNavigate } from "react-router-dom";
-// import css from "../css/Login.css";
 import { Nav } from "react-bootstrap";
 
 const Login = () => {
@@ -15,7 +10,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(true);
   const [email, setEmail] = useState("");
-  // const [errorMsg, setErrorMsg] = useState("");
 
   const onrollNumberChange = (event) => {
     setRollNumber(event.target.value);
@@ -83,10 +77,10 @@ const Login = () => {
   };
 
   return (
-    <Row className="mainrow">
-      <Col style={{ marginLeft: "1.5rem" }} className="widget">
+    <Row className={css.mainrow}>
+      <Col style={{ marginLeft: "1.5rem" }} className={css.widget}>
         <Container>
-          <Col className="Logos">
+          <Col className={css.Logos}>
             <h1>Login</h1>
           </Col>
           <Row>
@@ -101,11 +95,11 @@ const Login = () => {
           </Row>
         </Container>
         {isStudent ? (
-          <form className="form">
+          <form className={css.form}>
             <Form.Group className="mb-3" controlId="formBasicRollNumber">
               <Form.Label>Roll Number</Form.Label>
               <Form.Control
-                className="inputs"
+                className={css.inputs}
                 type="string"
                 placeholder="Enter Roll Number"
                 value={rollNumber}
@@ -115,7 +109,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
-                className="inputs"
+                className={css.inputs}
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -131,17 +125,17 @@ const Login = () => {
               Submit
             </Button>
 
-            <p className="dividing-line my-3">&#8195;Or&#8195;</p>
-            <Link className="signupText" to="/signup">
+            <p className={css.dividingLine}>&#8195;Or&#8195;</p>
+            <Link className={css.LoginText} to="/signup">
               Don’t have an account? Sign Up here
             </Link>
           </form>
         ) : (
-          <form onSubmit={(event) => formSubmitHandler(event)} className="form">
+          <form onSubmit={(event) => formSubmitHandler(event)} className={css.form}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
-                className="inputs"
+                className={css.inputs}
                 type="email"
                 placeholder="Enter college Email"
                 value={email}
@@ -152,7 +146,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
-                className="inputs"
+                className={css.inputs}
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -164,15 +158,15 @@ const Login = () => {
               Submit
             </Button>
 
-            <p className="dividing-line my-3">&#8195;Or&#8195;</p>
-            <Link className="signupText" to="/signup">
+            <p className={css.dividingLine}>&#8195;Or&#8195;</p>
+            <Link className={css.loginText} to="/signup">
               Don’t have an account? Sign Up here
             </Link>
           </form>
         )}
       </Col>
       <Col>
-        <div className="RightImage" />
+        <div className={css.RightImage} />
       </Col>
     </Row>
   );

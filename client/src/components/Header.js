@@ -2,18 +2,18 @@ import React from "react";
 
 import { Link } from 'react-router-dom';
 import { Navbar, Container, Nav } from "react-bootstrap";
-import "../css/Header.css";
+import css from "../css/Header.module.css";
 
 const Header = (props) => {
   
   return (
     <header>
       <Navbar bg="light" expand="lg">
-        <Container id="header">
+        <Container className={css.header}>
           <Navbar.Brand as={Link} to="/">Cipher Results</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="navLinks">
+            <Nav className={css.navLinks}>
               {props.isloggedIn ? (
                 <>
                   <Nav.Link onClick={() => props.logout(false)} as={Link} to="/">

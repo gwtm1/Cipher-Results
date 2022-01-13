@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
-const Admins = mongoose.model("Admin");
-const Students = mongoose.model("Students");
-const bcrypt = require("bcryptjs");
+import Admins from "../models/admin.js";
+import Students from "../models/student.js";
+// import Students from mongoose.model("Students");
+
+import bcrypt from "bcryptjs";
 
 export const adminLogingIn = (req, res) => {
   try {

@@ -1,8 +1,8 @@
 
 import Admins from "../models/admin.js";
 import Students from "../models/student.js";
-const bcrypt = require('bcryptjs');
-
+// const bcrypt = require('bcryptjs');
+import bcrypt from "bcryptjs";
 
 export const adminSigningUp = async (req, res) => {
   const { email, password } = req.body;

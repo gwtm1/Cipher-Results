@@ -1,10 +1,10 @@
-import "../css/Login.css";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import React, { useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
-import "./Signup";
-const Login = () => {
+import css from "../css/Signup.module.css";
+
+const Signup = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -77,29 +77,29 @@ const Login = () => {
   };
 
   return (
-    <Row className="mainrow">
-      <Col style={{ marginLeft: "1.5rem" }} className="widget">
+    <Row className={css.mainrow}>
+      <Col style={{ marginLeft: "2rem" }} className={css.widget}>
         <Container>
           <Col className="Logos">
             <h1>Signup</h1>
           </Col>
           <Row>
-            <Nav variant="tabs" className="navs">
-              <Nav.Item className="leftnav">
+            <Nav variant="tabs" className='navs'>
+              <Nav.Item className='leftnav' >
                 <Nav.Link onClick={() => onTabChange(true)}>Student</Nav.Link>
               </Nav.Item>
-              <Nav.Item className="rightnav">
+              <Nav.Item className= 'rightnav' >
                 <Nav.Link onClick={() => onTabChange(false)}>Admin</Nav.Link>
               </Nav.Item>
             </Nav>
           </Row>
         </Container>
         {isStudent ? (
-          <form onSubmit={(event) => formSubmitHandler(event)} className="form">
+          <form onSubmit={(event) => formSubmitHandler(event)} className={css.form}>
             <Form.Group className="mb-3" controlId="formBasicRollNumber">
               <Form.Label>Roll Number</Form.Label>
               <Form.Control
-                className="inputs"
+                className={css.inputs}
                 type="string"
                 placeholder="Enter Roll Number"
                 value={rollNumber}
@@ -109,7 +109,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
-                className="inputs"
+                className={css.inputs}
                 type="string"
                 placeholder="Enter E-mail "
                 value={email}
@@ -119,7 +119,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
-                className="inputs"
+                className={css.inputs}
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -145,17 +145,17 @@ const Login = () => {
               Submit
             </Button>
 
-            <p className="dividing-line my-3">&#8195;Or&#8195;</p>
+            <p className={css.dividingLine}>&#8195;Or&#8195;</p>
             <Link className="signupText" to="/signup">
               Already have an account? Login here
             </Link>
           </form>
         ) : (
-          <form onSubmit={(event) => formSubmitHandler(event)} className="form">
+          <form onSubmit={(event) => formSubmitHandler(event)} className={css.form}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
-                className="inputs"
+                className={css.inputs}
                 type="email"
                 placeholder="Enter email"
                 value={email}
@@ -166,7 +166,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
-                className="inputs"
+                className={css.inputs}
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -179,17 +179,17 @@ const Login = () => {
             </Button>
 
             <p className="dividing-line my-3">&#8195;Or&#8195;</p>
-            <Link className="LoginText" to="/Login">
+            <Link className={css.signupText} to="/Login">
               Already have an account? Login here
             </Link>
           </form>
         )}
       </Col>
       <Col>
-        <div className="RightImage" />
+        <div className={css.RightImage} />
       </Col>
     </Row>
   );
 };
 
-export default Login;
+export default Signup;
