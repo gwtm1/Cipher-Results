@@ -14,7 +14,7 @@ const Signup = () => {
 
   const formSubmitHandler = (event) => {
     if (isStudent) {
-      fetch("/signup/student", {
+      fetch("http://localhost:8080/signup/student", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +38,7 @@ const Signup = () => {
           console.log(err);
         });
     } else {
-      fetch("/signup/admin", {
+      fetch("http://localhost:8080/signup/admin", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -126,14 +126,14 @@ const Signup = () => {
                 onChange={onPasswordChange}
               />
             </Form.Group>
-            {isOptsent ? (
+            {/* {isOptsent ? (
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
               </Form.Group>
             ) : (
               <></>
-            )}
+            )} */}
 
             <Button
               variant="primary"

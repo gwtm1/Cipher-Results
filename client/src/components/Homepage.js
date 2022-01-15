@@ -7,9 +7,12 @@ const Homepage = () => {
     <div className={css.container}>
       <img alt="homepage" src={homeImage} width="100%" />
       <div className={css.textContainer}>
+        <div className={css.head}>
+          Cipher Results
+        </div>
         <div className={css.text}>
-          More Chances Ajinkya Rahane Gets, Fewer Opportunities For Hanuma
-          Vihari and Shreyas Iyer: Sanjay Manjrekar.
+        <p>Our website ensures confidentiality of student's grades with the help of Asymmetric Key Encryption.</p>
+        <p>Asymmetric Key Encryption to ensure confidentiality and</p> 
         </div>
       </div>
     </div>

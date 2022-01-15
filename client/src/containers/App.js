@@ -5,8 +5,8 @@ import Header from '../components/Header';
 import Login from '../components/Login';
 import Homepage from '../components/Homepage';
 import Signup from '../components/Signup';
-import Results from '../components/Results'
-import Upload from '../components/Upload'
+import Results from '../components/ViewResults'
+import Upload from '../components/UploadResults'
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 
 

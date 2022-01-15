@@ -13,6 +13,6 @@ const adminSchema = mongoose.Schema({
     }
 })
 
-var Admins = mongoose.model('Admins', adminSchema);
+var Admin = mongoose.model('Admin', adminSchema);
 
-export default Admins;
+export default Admin;

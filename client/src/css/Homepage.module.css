@@ -13,8 +13,14 @@
   left: 50%;
   transform: translate(-75%, -25%);
 }
-.text {
+.head {
     font-size: 2rem;
     font-weight: bold;
+    word-wrap: break-word;
+}
+
+.text {
+    font-style: oblique;
+    font-size: 1rem;
     word-wrap: break-word;
 }

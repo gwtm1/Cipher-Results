@@ -1,7 +1,6 @@
 
-import Admins from "../models/admin.js";
+import Admin from "../models/admin.js";
 import Students from "../models/student.js";
-// const bcrypt = require('bcryptjs');
 import bcrypt from "bcryptjs";
 
 export const adminSigningUp = async (req, res) => {
@@ -9,12 +8,13 @@ export const adminSigningUp = async (req, res) => {
 
   try {
     let hashedPassword = await bcrypt.hash(password,12);
-    var newadmin = new Admins({
+    var newadmin = new Admin({
       email,
       password: hashedPassword,
     });
     await newadmin.save();
     res.json(newadmin);
+    console.log("New admin signed up");
 
   } catch (error) {
     res.send(error.message);
@@ -34,7 +34,8 @@ export const studentSigningUp = async (req, res) => {
     });
     await newstudent.save();
     res.json(newstudent);
-    
+    console.log("New student signed up");
+
   } catch (error) {
     res.send(error.message);
     console.log(error.message);

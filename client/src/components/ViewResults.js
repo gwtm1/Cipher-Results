@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import css from "../css/Results.module.css";
+import css from "../css/ViewResults.module.css";
 
-const Results = () => {
+const ViewResults = () => {
   return (
     <div className={css.container}>
       <Form className={css.widget}>
@@ -31,4 +31,4 @@ const Results = () => {
   );
 };
 
-export default Results;
+export default ViewResults;

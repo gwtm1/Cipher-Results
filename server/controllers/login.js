@@ -1,4 +1,4 @@
-import Admins from "../models/admin.js";
+import Admin from "../models/admin.js";
 import Students from "../models/student.js";
 // import Students from mongoose.model("Students");
 
@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 export const adminLogingIn = (req, res) => {
   try {
     const { email, password } = req.body;
-    let currAdmin = Admins.findOne({ email: email });
+    let currAdmin = Admin.findOne({ email: email });
     if (!currAdmin) {
         return res.status(400).json({ error: "Invalid Email" });
         // return res.status(400).json({ error: "Invalid Email or Password" });
