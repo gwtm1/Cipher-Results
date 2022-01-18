@@ -5,9 +5,10 @@ import Header from '../components/Header';
 import Login from '../components/Login';
 import Homepage from '../components/Homepage';
 import Signup from '../components/Signup';
-import Results from '../components/ViewResults'
-import Upload from '../components/UploadResults'
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
+import Results from '../components/ViewResults';
+import Upload from '../components/UploadResults';
+import Emailverify from '../components/Emailverify'
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 
 const Routing = () => {
@@ -19,6 +20,7 @@ const Routing = () => {
       <Route exact path='/login' element={<Login />}/>
       <Route exact path='/viewresults' element={<Results />}/>
       <Route exact path='/uploadresults' element={<Upload />}/>
+      <Route exact path='/emailVerify' element={<Emailverify/>}/>
     </Routes>
   )
 }
@@ -27,7 +29,8 @@ const Routing = () => {
 function App() {
 
   const [isloggedIn,setIsloggedIn] = useState(false);
-  
+  const [email,setEmail] = useState('');
+  const [rollnumber,setRollNumber] = useState('');
 
   const logout = (state)=>{
     console.log(state);

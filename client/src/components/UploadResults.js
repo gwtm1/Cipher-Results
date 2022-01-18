@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import css from "../css/Upload.module.css";
+// import { useNavigate } from "react-router-dom";
+import css from "../css/UploadResults.module.css";
 
 const UploadResults = () => {
   // const [Year, setYear] = useState("");
@@ -9,30 +9,32 @@ const UploadResults = () => {
   // const [SemesterNumber, setsSemesterNumber] = useState("");
   // const [state, setstate] = useState("");
 
-  fetch("http://localhost:8080/signup/student", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      // Year,
-      // Batch,
-      // Semester,
-      // ResultsJson
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      if (data.error) {
-        alert(data.error);
-      } else {
-        // navigate("/viewresults");
-      }
+  const resultsUploadHandler = () => {
+    fetch("http://localhost:8080/", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // Year,
+        // Batch,
+        // Semester,
+        // ResultsJson
+      }),
     })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.error) {
+          alert(data.error);
+        } else {
+          // navigate("/viewresults");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className={css.container}>
@@ -60,7 +62,11 @@ const UploadResults = () => {
           <Form.Label>Upload Results CSV file</Form.Label>
           <Form.Control type="file" />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button
+          onClick={() => resultsUploadHandler()}
+          variant="primary"
+          type="submit"
+        >
           Submit
         </Button>
       </Form>

@@ -5,6 +5,7 @@ const studentSchema = mongoose.Schema({
         type: String,
         required : true,
         trim: true,
+        unique: true  
     },
     email:{
         type : String,
@@ -15,7 +16,8 @@ const studentSchema = mongoose.Schema({
     password:{
         type : String,
         required : true
-    }    
+    }
+
 })
 
 var Students = mongoose.model('Students', studentSchema);

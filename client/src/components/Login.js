@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
-const Login = () => {
+const Login = (props) => {
   const navigate = useNavigate();
-  const [rollNumber, setRollNumber] = useState("");
+  const [rollnumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(true);
   const [email, setEmail] = useState("");
@@ -26,15 +26,20 @@ const Login = () => {
   const onTabChange = (state) => {
     setIsStudent(state);
   };
-  const formSubmitHandler = () => {
+  const navigator=(route)=>{
+    navigate(route);
+  }
+
+  const loginSubmitHandler = () => {
     if (isStudent) {
-      fetch("/login/student", {
+      console.log(isStudent)
+      fetch("http://localhost:8080/login/student", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          rollNumber,
+          rollnumber,
           password,
         }),
       })
@@ -44,14 +49,15 @@ const Login = () => {
           if (data.error) {
             alert(data.error);
           } else {
-            navigate("/viewresults");
+            navigator("/viewresults");
           }
         })
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      fetch("/login/admin", {
+    } 
+    else {
+      fetch("http://localhost:8080/login/admin", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +73,7 @@ const Login = () => {
           if (data.error) {
             alert(data.error);
           } else {
-            navigate("/uploadresults");
+            navigator("/uploadresults");
           }
         })
         .catch((err) => {
@@ -85,24 +91,24 @@ const Login = () => {
           </Col>
           <Row>
             <Nav variant="tabs" className="navs">
-              <Nav.Item className="leftnav">
-                <Nav.Link onClick={() => onTabChange(true)}>Student</Nav.Link>
+              <Nav.Item  className={css.leftNav}>
+                <Nav.Link  onClick={() => onTabChange(true)}>Student</Nav.Link>
               </Nav.Item>
-              <Nav.Item className="rightnav">
+              <Nav.Item className={css.rightNav}>
                 <Nav.Link onClick={() => onTabChange(false)}>Admin</Nav.Link>
               </Nav.Item>
             </Nav>
           </Row>
         </Container>
         {isStudent ? (
-          <form className={css.form}>
+          <Container className={css.form}>
             <Form.Group className="mb-3" controlId="formBasicRollNumber">
               <Form.Label>Roll Number</Form.Label>
               <Form.Control
                 className={css.inputs}
                 type="string"
                 placeholder="Enter Roll Number"
-                value={rollNumber}
+                value={rollnumber}
                 onChange={onrollNumberChange}
               />
             </Form.Group>
@@ -120,7 +126,7 @@ const Login = () => {
             <Button
               variant="primary"
               type="submit"
-              onClick={() => formSubmitHandler()}
+              onClick={() => loginSubmitHandler()}
             >
               Submit
             </Button>
@@ -129,9 +135,9 @@ const Login = () => {
             <Link className={css.LoginText} to="/signup">
               Don’t have an account? Sign Up here
             </Link>
-          </form>
+          </Container>
         ) : (
-          <form onSubmit={(event) => formSubmitHandler(event)} className={css.form}>
+          <Container  className={css.form}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -154,15 +160,10 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button onClick={() => loginSubmitHandler()} variant="primary" type="submit">
               Submit
             </Button>
-
-            <p className={css.dividingLine}>&#8195;Or&#8195;</p>
-            <Link className={css.loginText} to="/signup">
-              Don’t have an account? Sign Up here
-            </Link>
-          </form>
+          </Container>
         )}
       </Col>
       <Col>
