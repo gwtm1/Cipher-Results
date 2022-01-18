@@ -1,10 +1,10 @@
 import express from "express";
-import { adminSigningUp, studentSigningUp } from "../controllers/signup.js";
-import { validateAdmin, validateStudent, validate } from "../middlewares/validator.js"
+import { studentSigningUp } from "../controllers/signup.js";
+import { validateStudentSignup, validator } from "../middlewares/validator.js"
 
 const router = express.Router();
 
-router.post("/admin", validateAdmin, validate, adminSigningUp);
-router.post("/student", validateStudent, validate, studentSigningUp);
+// router.post("/admin", validateAdmin, validate, adminSigningUp);
+router.post("/student", validateStudentSignup, validator, studentSigningUp);
 
 export default router;

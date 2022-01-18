@@ -49,6 +49,12 @@ margin: auto;
   color: rgb(148, 48, 148);
 }
 
+.active{
+  border-color: red;
+}
+.leftNav {
+  border-color: yellow;
+}
 .RightImage {
   border: 2px solid rgb(99, 21, 224);
   border-radius: 4px;

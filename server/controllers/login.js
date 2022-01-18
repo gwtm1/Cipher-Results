@@ -1,40 +1,40 @@
-import Admin from "../models/admin.js";
+import Admins from "../models/admin.js";
 import Students from "../models/student.js";
-// import Students from mongoose.model("Students");
+import { sendError } from "../utils/helper.js"
 
+import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-export const adminLogingIn = (req, res) => {
+export const adminLogingIn = async (req, res) => {
   try {
     const { email, password } = req.body;
-    let currAdmin = Admin.findOne({ email: email });
+    let currAdmin = await Admins.findOne({ email });
     if (!currAdmin) {
-        return res.status(400).json({ error: "Invalid Email" });
+      return sendError(res, 400, "Invalid Email");
         // return res.status(400).json({ error: "Invalid Email or Password" });
     }
-    let passwordMatch = bcrypt.compare(password, currAdmin.password);
+    let passwordMatch = bcrypt.compareSync(password, currAdmin.password);
     if (passwordMatch) {
       res.json(currAdmin);
     } else {
-      res.status(400).json({ error: "Invalid Email ID or Password" });
+      sendError(res, 400, "Mismatched Email ID or Password!");
     }
   } catch (error) {
     console.log(error.message);
   }
 };
-export const studentLogingIn = (req, res) => {
+export const studentLogingIn = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    let currStudent = Students.findOne({ email: email });
+    const { rollnumber, password } = req.body;
+    let currStudent = await Students.findOne({ rollnumber });
     if (!currStudent) {
-        return res.status(400).json({ error: "Invalid Email" });
-        // return res.status(400).json({ error: "Invalid Email or Password" });
+      sendError(res, 400, "Roll Number not found")
     }
-    let passwordMatch = bcrypt.compare(password, currStudent.password);
+    let passwordMatch = bcrypt.compareSync(password, currStudent.password);
     if (passwordMatch) {
       res.json(currStudent);
     } else {
-      res.status(400).json({ error: "Invalid Email ID or Password" });
+      sendError(res, 400, "Mismatched Roll Number or Password!")
     }
   } catch (error) {
     console.log(error.message);

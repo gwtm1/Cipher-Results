@@ -4,10 +4,12 @@ import bodyParser from 'body-parser';
 import cors from "cors";
 import signup from "./routes/signup.js";
 import login from "./routes/login.js";
+import uploadresults from "./routes/uploadresults.js";
+import dotenv from "dotenv";
+dotenv.config();
 
-process.env.mongo_details = "jithendra:jithendra71";
 const mongodb_url = `mongodb+srv://${process.env.mongo_details}@cipher-results.5uw4z.mongodb.net/cipherResults?retryWrites=true&w=majority`;
-// const mongodb_url = `mongodb+srv://jithendra:jithendra71@cipher-results.5uw4z.mongodb.net/`;
+// const mongodb_url = `mongodb+srv://jithendra:jithendra71@cipher-results.5uw4z.mongodb.net/`; 
 
 const PORT = process.env.PORT || 8080;
 
@@ -24,11 +26,12 @@ mongoose
 
     app.use("/signup", signup);
     app.use("/login", login);
+    app.use("/uploadresults", uploadresults);
     app.get("/", (req, res) => {
-      return res.json({ title: "GeeksforGeeks" });
+      return res.json({ title: "CipherResults" });
     });
 
-    app.listen(PORT, () => console.log(`Server Running on Port:   ${PORT}`));
+    app.listen(PORT, () => console.log(`Server Running on Port:${PORT}`));
   })
   .catch((error) => {
     console.log(`${error} did not connect`);
