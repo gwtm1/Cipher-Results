@@ -6,7 +6,7 @@ import signup from "./routes/signup.js";
 import login from "./routes/login.js";
 import uploadresults from "./routes/uploadresults.js";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config()
 
 const mongodb_url = `mongodb+srv://${process.env.mongo_details}@cipher-results.5uw4z.mongodb.net/cipherResults?retryWrites=true&w=majority`;
 // const mongodb_url = `mongodb+srv://jithendra:jithendra71@cipher-results.5uw4z.mongodb.net/`; 
@@ -23,7 +23,6 @@ mongoose
     // app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cors());
-
     app.use("/signup", signup);
     app.use("/login", login);
     app.use("/uploadresults", uploadresults);
