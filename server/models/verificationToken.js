@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt, { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 const verificationTokenSchema = new mongoose.Schema({
     owner:{
@@ -26,9 +26,11 @@ verificationTokenSchema.pre('save', async function (next){
     next();
 })
 
-verificationTokenSchema.methods.compareToken = async function(token){
+verificationTokenSchema.methods.compareToken = async function(token) {
     const res = await bcrypt.compareSync(token, this.token);
     return res;
 }
 
-module.exports = mongoose.model('VerificationToken', verificationTokenSchema)
+var VerificationToken  = mongoose.model('VerificationToken', verificationTokenSchema);
+
+export default VerificationToken;
