@@ -1,24 +1,55 @@
-
-import Admins from "../models/admin.js";
 import Students from "../models/student.js";
-import bcrypt from "bcryptjs";
-import { mailTemplate, mailTransport, otpGenerator } from "../utils/mailVerify.js";
 import VerificationToken from "../models/verificationToken.js";
-import { sendError } from "../utils/helper.js";
-import { isValidObjectId } from "mongoose";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-export const studentSigningUp = async (req, res) => {
+import {
+  mailTemplate,
+  mailTransport,
+  otpGenerator,
+} from "../utils/mailVerify.js";
+import { sendError } from "../utils/helper.js";
+import pkg from "mongoose";
+
+const { isValidObjectId } = pkg;
+
+export const studentSignUp = async (req, res) => {
   const { rollnumber, email, password } = req.body;
 
-// validate if another user has same email-id
-
-try {
-  let currEmail = await Students.findOne({ email });
-    if (currEmail) {
-      return res.status(400).json({ success: false, error: "Already Signed Up" });
+  try {
+    const year1 = rollnumber.slice(0, 4);
+    const batch1 = rollnumber.slice(4, 7);
+    const rollnumber1 = rollnumber.slice(8, 11);
+    const domain1 = "@iiitm.ac.in";
+  
+    const year2 = email.slice(4, 8);
+    const batch2 = email.slice(0, 3).toUpperCase();
+    const domain2 = email.slice(11, 23);
+    const rollnumber2 = email.slice(8, 11);
+  
+    if (
+      year1.localeCompare(year2) ||
+      batch1.localeCompare(batch2) ||
+      rollnumber1.localeCompare(rollnumber2) ||
+      domain1.localeCompare(domain2)
+    ) {
+      return sendError(res, "Enter college emaid-id corresponding to the given roll number!");
     }
-    
-    let hashedPassword = await bcrypt.hash(password,12);
+
+    let isEmailFound = await Students.findOne({ email });
+        
+    if (isEmailFound && isEmailFound.isVerified === false) {
+      let token = await VerificationToken.findOne({
+        owner: isEmailFound._id,
+      });
+      await Students.findByIdAndDelete(isEmailFound._id);
+      await VerificationToken.findByIdAndDelete(token._id);
+    }
+    else if(isEmailFound){
+      return sendError(res,'Already Signed Up')
+    }
+
+    let hashedPassword = await bcrypt.hash(password, 12);
     var newstudent = new Students({
       rollnumber,
       email,
@@ -26,73 +57,74 @@ try {
     });
 
     const OTP = otpGenerator();
-    const verificationToken =  new VerificationToken({
+    const verificationToken = new VerificationToken({
       owner: newstudent._id,
-      token : OTP
-    })
+      token: OTP,
+    });
 
     await verificationToken.save();
-    await newstudent.save();
+    await newstudent.save(); 
+    res.json({userId : newstudent._id});
 
-    mailTransport().send({
-      from : 'resultadmin@iiitm.ac.in',
-      to: newstudent.email,
-      subject : 'Email Verification for Cipher-Results',
-      html : mailTemplate(OTP)
-    })
-
-    console.log("New student signed up");
-    res.json(newstudent);
+    mailTransport().sendMail(
+      {
+        from: {
+          name: "Cipher Results",
+          email: process.env.GMAIL_USERNAME,
+        },
+        to: newstudent.email,
+        subject: "Email Verification for Cipher-Results",
+        html: mailTemplate(OTP),
+      },
+      function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      }
+    );
     
   } catch (error) {
     res.send(error.message);
-    console.log(error.message);
+    console.log(error);
   }
 };
 
-export const emailVerify = async (req,res) =>{
-  const {userId, otp} = req.body;
-  if(!userId || !otp) return sendError(res,'Please enter a vaslid OTP!!');
+export const verifyEmail = async (req, res) => {
+  const { userId, otp } = req.body;
 
-  if(!isValidObjectId(userId)) return sendError(res,'Session expired, Please Signup again!')
+  try {
+    if (!userId || !otp) return sendError(res, "Please enter a valid OTP!!");
 
-  const student =  await Students.findById(userId)
-  if(!student) return sendError(res,'Sorry, User not found!!');
- 
-  if(student.isVerified) return sendError(res,'Account already verified!')
-  
-  const token = await VerificationToken.findOne({owner: student._id})
-  if(!token) return sendError(res,'Sorry, User not found!')
+    const student = await Students.findById(userId);
+    if (!student) return sendError(res, "Sorry, User not found!!");
 
-  const isMatched =  await token.compareTOken(otp);
-  if(isMatched) return sendError(res,'Please enter valid OTP!!');
+    if (student.isVerified) return sendError(res, "Account already verified!");
 
-  student.isVerified = true;
+    const token = await VerificationToken.findOne({ owner: student._id });
+    if (!token) return sendError(res, "OTP expired, Please Signup again!!");
 
-  await VerificationToken.findByIdAndDelete(token._id);
+    const isMatched = await token.compareToken(otp);
+    if (!isMatched) return sendError(res, "Please enter valid OTP!!");
 
-  await student.save();
+    student.isVerified = true;
 
-  res.json(student); 
+    await VerificationToken.findByIdAndDelete(token._id);
+    await student.save();
 
-}
+    const jwtToken = jwt.sign(
+      { currStudentId: currStudent._id },
+      process.env.JWT_SECRETE,
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.json({success: true, jwtToken});
 
 
-// export const adminSigningUp = async (req, res) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     let hashedPassword = await bcrypt.hash(password,12);
-//     var newadmin = new Admin({
-//       email,
-//       password: hashedPassword,
-//     });
-//     await newadmin.save();
-//     res.json(newadmin);
-//     console.log("New admin signed up");
-
-//   } catch (error) {
-//     res.send(error.message);
-//     console.log(error.message);
-//   }
-// };
+  } catch (error) {
+    res.send(error);
+    console.log(error);
+  }
+};

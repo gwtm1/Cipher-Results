@@ -1,11 +1,10 @@
 import express from "express";
-import { emailVerify, studentSigningUp } from "../controllers/signup.js";
+import { verifyEmail, studentSignUp } from "../controllers/signup.js";
 import { validateStudentSignup, validator } from "../middlewares/validator.js"
 
 const router = express.Router();
 
-// router.post("/admin", validateAdmin, validate, adminSigningUp);
-router.post("/student", validateStudentSignup, validator, studentSigningUp);
-router.post('/emailverify',emailVerify)
+router.post("/student", validateStudentSignup, validator, studentSignUp);
+router.post('/verifyemail', verifyEmail)
 
 export default router;

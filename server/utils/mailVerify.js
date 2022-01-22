@@ -1,25 +1,37 @@
-import nodemailer from 'nodemailer'
+import nodemailer from "nodemailer";
+import smtpTransport from "nodemailer-smtp-transport";
 
-export function otpGenerator(){
-    let otp='';
-    for(let i=0;i<4;i++){
-      otp+= Math.round(Math.random()*9)
-    }
-    return otp;
+export function otpGenerator() {
+  let otp = "";
+  for (let i = 0; i < 4; i++) {
+    otp += Math.round(Math.random() * 9);
   }
+  return otp;
+}
+// // MailTrap
+// export const mailTransport = () =>
+//   nodemailer.createTransport({
+//     host: "smtp.mailtrap.io",
+//     port: 2525,
+//     auth: {
+//       user: process.env.MAILTRAP_USERNAME,
+//       pass: process.env.MAILTRAP_PASSWORD,
+//     },
+//   });
 
-export const mailTransport = ()=>
-        nodemailer.createTransport({
-            host: "smtp.mailtrap.io",
-            port: 2525,
-            auth: {
-            user: process.env.MAILTRAP_USERNAME,
-            pass: process.env.MAILTRAP_PASSWORD
-            }
-        });
+export const mailTransport = () => {
+  return nodemailer.createTransport(smtpTransport({
+    server: "gmail",
+    host: 'smtp.gmail.com',
+    auth: {
+      user: process.env.GMAIL_USERNAME,
+      pass: process.env.GMAIL_PASSWORD,
+    },
+  }));
+};
 
-export const mailTemplate = (OTP) =>(
-    `<!doctype html>
+export const mailTemplate = (OTP) => {
+  return `<!doctype html>
     <html>
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -37,5 +49,5 @@ export const mailTemplate = (OTP) =>(
           a:hover { border-left-width: 1em; min-height: 2em; }
         </style>
       </body>
-    </html>`
-)
+    </html>`;
+};

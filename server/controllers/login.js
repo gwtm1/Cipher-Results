@@ -11,13 +11,12 @@ export const adminLogingIn = async (req, res) => {
     let currAdmin = await Admins.findOne({ email });
     if (!currAdmin) {
       return sendError(res, 400, "Invalid Email");
-      // return res.status(400).json({ error: "Invalid Email or Password" });
     }
     let passwordMatch = bcrypt.compareSync(password, currAdmin.password);
     if (!passwordMatch) {
       sendError(res, 400, "Mismatched Email ID or Password!");
     } else {
-      res.json(currAdmin);
+      res.json(currAdmin._id);
     }
   } catch (error) {
     console.log(error.message);
@@ -34,14 +33,14 @@ export const studentLogingIn = async (req, res) => {
     if (!passwordMatch) {
       sendError(res, 400, "Mismatched Roll Number or Password!");
     } else {
-      const token = jwt.sign(
+      const jwtToken = jwt.sign(
         { currStudentId: currStudent._id },
         process.env.JWT_SECRETE,
         {
-          expiresIn: "1d",
+          expiresIn: "1h",
         }
       );
-      res.json({success: true, student: {rollnumber: currStudent.rollnumber, token}});
+      res.json({success: true, student: {userId: currStudent._id, jwtToken}});
     }
   } catch (error) {
     console.log(error.message);

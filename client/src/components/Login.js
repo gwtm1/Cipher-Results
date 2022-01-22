@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
 const Login = (props) => {
+  const { userId, loginStatus, collectUserDetails } = props
+
   const navigate = useNavigate();
   const [rollnumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -26,13 +28,13 @@ const Login = (props) => {
   const onTabChange = (state) => {
     setIsStudent(state);
   };
-  const navigator=(route)=>{
+  const navigator = (route) => {
     navigate(route);
-  }
+  };
 
   const loginSubmitHandler = () => {
     if (isStudent) {
-      console.log(isStudent)
+
       fetch("http://localhost:8080/login/student", {
         method: "post",
         headers: {
@@ -49,14 +51,15 @@ const Login = (props) => {
           if (data.error) {
             alert(data.error);
           } else {
+            collectUserDetails(data.userId);
+            loginStatus(true);
             navigator("/viewresults");
           }
         })
         .catch((err) => {
           console.log(err);
         });
-    } 
-    else {
+    } else {
       fetch("http://localhost:8080/login/admin", {
         method: "post",
         headers: {
@@ -91,8 +94,8 @@ const Login = (props) => {
           </Col>
           <Row>
             <Nav variant="tabs" className="navs">
-              <Nav.Item  className={css.leftNav}>
-                <Nav.Link  onClick={() => onTabChange(true)}>Student</Nav.Link>
+              <Nav.Item className={css.leftNav}>
+                <Nav.Link onClick={() => onTabChange(true)}>Student</Nav.Link>
               </Nav.Item>
               <Nav.Item className={css.rightNav}>
                 <Nav.Link onClick={() => onTabChange(false)}>Admin</Nav.Link>
@@ -137,7 +140,7 @@ const Login = (props) => {
             </Link>
           </Container>
         ) : (
-          <Container  className={css.form}>
+          <Container className={css.form}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -160,7 +163,11 @@ const Login = (props) => {
               />
             </Form.Group>
 
-            <Button onClick={() => loginSubmitHandler()} variant="primary" type="submit">
+            <Button
+              onClick={() => loginSubmitHandler()}
+              variant="primary"
+              type="submit"
+            >
               Submit
             </Button>
           </Container>
