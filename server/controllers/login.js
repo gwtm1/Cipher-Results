@@ -16,7 +16,18 @@ export const adminLogingIn = async (req, res) => {
     if (!passwordMatch) {
       sendError(res, 400, "Mismatched Email ID or Password!");
     } else {
-      res.json(currAdmin._id);
+
+      const jwtToken = jwt.sign(
+        { currAdmintId: currAdmin._id },
+        process.env.JWT_SECRETE,
+        {
+          expiresIn: "1h",
+        }
+      );
+      res.json({
+        success: true,
+        student: { userId: currAdmin._id, jwtToken },
+      });
     }
   } catch (error) {
     console.log(error.message);
@@ -25,6 +36,7 @@ export const adminLogingIn = async (req, res) => {
 export const studentLogingIn = async (req, res) => {
   try {
     const { rollnumber, password } = req.body;
+
     let currStudent = await Students.findOne({ rollnumber });
     if (!currStudent) {
       sendError(res, 400, "Roll Number not found");
@@ -33,6 +45,7 @@ export const studentLogingIn = async (req, res) => {
     if (!passwordMatch) {
       sendError(res, 400, "Mismatched Roll Number or Password!");
     } else {
+      
       const jwtToken = jwt.sign(
         { currStudentId: currStudent._id },
         process.env.JWT_SECRETE,
@@ -40,7 +53,10 @@ export const studentLogingIn = async (req, res) => {
           expiresIn: "1h",
         }
       );
-      res.json({success: true, student: {userId: currStudent._id, jwtToken}});
+      res.json({
+        success: true,
+        student: { userId: currStudent._id, jwtToken },
+      });
     }
   } catch (error) {
     console.log(error.message);

@@ -1,22 +1,23 @@
-import React from "react";
+import React,{ useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import css from "../css/ViewResults.module.css";
 
 const ViewResults = () => {
+
+  const [semester,setSemester] = useState('');
+
+
+  const onSemesterChange = (event)=>{
+    setSemester(event.target.value)
+  }
+
   return (
     <div className={css.container}>
       <Form className={css.widget}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Roll Number</Form.Label>
-          <Form.Control
-            type="string"
-            placeholder="20XXBCS-XXX or 20XXIMT-XXX or 20XXIMG-XXX"
-          />
-        </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Semester Number</Form.Label>
-          <Form.Control type="number" placeholder="Enter Semester Number" />
+          <Form.Control type="number" value={semester} onChange={onSemesterChange} placeholder="Enter Semester Number" />
         </Form.Group>
 
         <Form.Group controlId="formFile" className="mb-3">
