@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import css from "../css/Signup.module.css";
+// const NodeRSA = require('node-rsa');
 
 const Signup = (props) => {
-  const { userId, loginStatus, collectUserDetails } = props;
+  const { userId, loginStatus, collectUserDetails, createToken: saveJWTToken } = props;
 
   const navigate = useNavigate();
   const [rollnumber, setRollNumber] = useState("");
@@ -12,13 +13,37 @@ const Signup = (props) => {
   const [password, setPassword] = useState("");
   const [OTP, setOTP] = useState("");
   const [isOptsent, setOtpsent] = useState(false);
-
+  const [loading, setLoading] = useState(false)
+  
   const navigator = (endpoint) => {
     navigate(endpoint, { replace: true });
   };
 
+  const download = (filename, text) => {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+ 
+    element.style.display = 'none';
+    document.body.appendChild(element);
+ 
+    element.click();
+ 
+    document.body.removeChild(element);
+  }
+
+  const generateKeyPair = () =>{
+    
+    // const key = new NodeRSA({ b: 1024 });
+    
+    // const publicKey = key.exportKey('public');
+    // const privateKey = key.exportKey('private');
+    // return { publicKey, privateKey };
+  }
 
   const OTPSubmitHandler = () => {
+    const {publicKey, privateKey} = generateKeyPair();
+    
     fetch("http://localhost:8080/signup/emailverify", {
       method: "post",
       headers: {
@@ -27,6 +52,7 @@ const Signup = (props) => {
       body: JSON.stringify({
         userId,
         OTP,
+        publicKey
       }),
     })
       .then((res) => res.json())
@@ -35,8 +61,10 @@ const Signup = (props) => {
         if (data.error) {
           alert(data.error);
         } else {
+
           loginStatus(true)
-          
+          saveJWTToken(data.jwtToken)
+          download('Private-Key.txt', privateKey);
           navigator(`/viewresults`);
         }
       });
@@ -44,6 +72,7 @@ const Signup = (props) => {
  
 
   const formSubmitHandler = () => {
+    setLoading(true)
     fetch("http://localhost:8080/signup/student", {
       method: "post",
       headers: {
@@ -61,8 +90,9 @@ const Signup = (props) => {
           alert(data.error);
           navigator("/signup");
         } else {
-          collectUserDetails(data.userId)
+          collectUserDetails(data.userId);
           setOtpsent(true);
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -125,10 +155,10 @@ const Signup = (props) => {
 
             <Button
               variant="primary"
-              type="submit"
+              type="Send OTP"
               onClick={() => formSubmitHandler()}
             >
-              Submit
+             {loading ?'Loading...' :'Submit'}
             </Button>
 
             <p className={css.dividingLine}>&#8195;Or&#8195;</p>
@@ -150,10 +180,10 @@ const Signup = (props) => {
             </Form.Group>
             <Button
               variant="primary"
-              type="submit"
+              type="Submit"
               onClick={() => OTPSubmitHandler()}
             >
-              Submit
+              {loading ? 'Loading...' :'Submit'}
             </Button>
           </Container>
         )}

@@ -5,9 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
 const Login = (props) => {
-  const { userId, loginStatus, collectUserDetails } = props
+  const { createToken, loginStatus, collectUserDetails } = props
 
   const navigate = useNavigate();
+
   const [rollnumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(true);
@@ -51,6 +52,7 @@ const Login = (props) => {
           if (data.error) {
             alert(data.error);
           } else {
+            createToken(data.jwtToken);
             collectUserDetails(data.userId);
             loginStatus(true);
             navigator("/viewresults");
@@ -76,6 +78,8 @@ const Login = (props) => {
           if (data.error) {
             alert(data.error);
           } else {
+            // saveJWTToken(data.jwtToken)
+            loginStatus(true);
             navigator("/uploadresults");
           }
         })

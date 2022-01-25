@@ -21,12 +21,12 @@ export const studentSignUp = async (req, res) => {
     const batch1 = rollnumber.slice(4, 7);
     const rollnumber1 = rollnumber.slice(8, 11);
     const domain1 = "@iiitm.ac.in";
-  
+
     const year2 = email.slice(4, 8);
     const batch2 = email.slice(0, 3).toUpperCase();
     const domain2 = email.slice(11, 23);
     const rollnumber2 = email.slice(8, 11);
-  
+
     if (
       year1.localeCompare(year2) ||
       batch1.localeCompare(batch2) ||
@@ -37,7 +37,7 @@ export const studentSignUp = async (req, res) => {
     }
 
     let isEmailFound = await Students.findOne({ email });
-        
+
     if (isEmailFound && isEmailFound.isVerified === false) {
       let token = await VerificationToken.findOne({
         owner: isEmailFound._id,
@@ -45,8 +45,8 @@ export const studentSignUp = async (req, res) => {
       await Students.findByIdAndDelete(isEmailFound._id);
       await VerificationToken.findByIdAndDelete(token._id);
     }
-    else if(isEmailFound){
-      return sendError(res,'Already Signed Up')
+    else if (isEmailFound) {
+      return sendError(res, 'Already Signed Up')
     }
 
     let hashedPassword = await bcrypt.hash(password, 12);
@@ -63,8 +63,8 @@ export const studentSignUp = async (req, res) => {
     });
 
     await verificationToken.save();
-    await newstudent.save(); 
-    res.json({userId : newstudent._id});
+    await newstudent.save();
+    res.json({ userId: newstudent._id });
 
     mailTransport().sendMail(
       {
@@ -84,7 +84,7 @@ export const studentSignUp = async (req, res) => {
         }
       }
     );
-    
+
   } catch (error) {
     res.send(error.message);
     console.log(error);
@@ -92,7 +92,7 @@ export const studentSignUp = async (req, res) => {
 };
 
 export const verifyEmail = async (req, res) => {
-  const { userId, otp } = req.body;
+  const { userId, otp, publicKey } = req.body;
 
   try {
     if (!userId || !otp) return sendError(res, "Please enter a valid OTP!!");
@@ -109,6 +109,7 @@ export const verifyEmail = async (req, res) => {
     if (!isMatched) return sendError(res, "Please enter valid OTP!!");
 
     student.isVerified = true;
+    student.publicKey = publicKey
 
     await VerificationToken.findByIdAndDelete(token._id);
     await student.save();
@@ -120,7 +121,7 @@ export const verifyEmail = async (req, res) => {
         expiresIn: "1h",
       }
     );
-    res.json({success: true, jwtToken});
+    res.json({ success: true, jwtToken });
 
 
   } catch (error) {
