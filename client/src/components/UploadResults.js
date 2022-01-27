@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import jwt from "jsonwebtoken";
 import css from "../css/UploadResults.module.css";
 
 const UploadResults = () => {
@@ -13,18 +13,18 @@ const UploadResults = () => {
   const [resultsFile, setResultsFile] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const admin = jwt.decode(token);
-      if (!admin) {
-        localStorage.removeItem("token");
-        navigate("/login", { replace: true });
-      } else {
-        // fetch...... 
-      }
-    }
-  }, [isSubmitted, navigate]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     const admin = jwt.decode(token);
+  //     if (!admin) {
+  //       localStorage.removeItem("token");
+  //       navigate("/login", { replace: true });
+  //     } else {
+  //       // fetch...... 
+  //     }
+  //   }
+  // }, [isSubmitted, navigate]);
 
   const resultsUploadHandler = () => {
     setIsSubmitted(true);
