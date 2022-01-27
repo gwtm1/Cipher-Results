@@ -78,7 +78,6 @@ const Login = (props) => {
           if (data.error) {
             alert(data.error);
           } else {
-            // saveJWTToken(data.jwtToken)
             loginStatus(true);
             navigator("/uploadresults");
           }

@@ -1,7 +1,6 @@
 import Students from "../models/student.js";
 import VerificationToken from "../models/verificationToken.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 import {
   mailTemplate,
@@ -59,7 +58,7 @@ export const studentSignUp = async (req, res) => {
     const OTP = otpGenerator();
     const verificationToken = new VerificationToken({
       owner: newstudent._id,
-      token: OTP,
+      otp: OTP,
     });
 
     await verificationToken.save();
@@ -92,10 +91,10 @@ export const studentSignUp = async (req, res) => {
 };
 
 export const verifyEmail = async (req, res) => {
-  const { userId, otp, publicKey } = req.body;
+  const { userId, OTP } = req.body;
 
   try {
-    if (!userId || !otp) return sendError(res, "Please enter a valid OTP!!");
+    if (!userId || !OTP) return sendError(res, "Please enter a valid OTP!!");
 
     const student = await Students.findById(userId);
     if (!student) return sendError(res, "Sorry, User not found!!");
@@ -105,23 +104,15 @@ export const verifyEmail = async (req, res) => {
     const token = await VerificationToken.findOne({ owner: student._id });
     if (!token) return sendError(res, "OTP expired, Please Signup again!!");
 
-    const isMatched = await token.compareToken(otp);
+    const isMatched = await token.compareToken(OTP);
     if (!isMatched) return sendError(res, "Please enter valid OTP!!");
 
     student.isVerified = true;
-    student.publicKey = publicKey
 
     await VerificationToken.findByIdAndDelete(token._id);
     await student.save();
 
-    const jwtToken = jwt.sign(
-      { currStudentId: currStudent._id },
-      process.env.JWT_SECRETE,
-      {
-        expiresIn: "1h",
-      }
-    );
-    res.json({ success: true, jwtToken });
+    res.json({ success: true });
 
 
   } catch (error) {

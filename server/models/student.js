@@ -35,7 +35,7 @@ const studentSchema = mongoose.Schema({
     },
     publicKey:{
         type : String,
-        required : true,
+        // required : true,
         default : '',
     },
     results:{

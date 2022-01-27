@@ -2,7 +2,6 @@ import Admins from "../models/admin.js";
 import Students from "../models/student.js";
 import { sendError } from "../utils/helper.js";
 
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 export const adminLogingIn = async (req, res) => {
@@ -16,17 +15,9 @@ export const adminLogingIn = async (req, res) => {
     if (!passwordMatch) {
       sendError(res, 400, "Mismatched Email ID or Password!");
     } else {
-
-      const jwtToken = jwt.sign(
-        { currAdmintId: currAdmin._id },
-        process.env.JWT_SECRETE,
-        {
-          expiresIn: "1h",
-        }
-      );
       res.json({
         success: true,
-        student: { userId: currAdmin._id, jwtToken },
+        student: { userId: currAdmin._id },
       });
     }
   } catch (error) {
@@ -45,17 +36,9 @@ export const studentLogingIn = async (req, res) => {
     if (!passwordMatch) {
       sendError(res, 400, "Mismatched Roll Number or Password!");
     } else {
-      
-      const jwtToken = jwt.sign(
-        { currStudentId: currStudent._id },
-        process.env.JWT_SECRETE,
-        {
-          expiresIn: "1h",
-        }
-      );
       res.json({
         success: true,
-        student: { userId: currStudent._id, jwtToken },
+        student: { userId: currStudent._id },
       });
     }
   } catch (error) {

@@ -13,19 +13,6 @@ const UploadResults = () => {
   const [resultsFile, setResultsFile] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     const admin = jwt.decode(token);
-  //     if (!admin) {
-  //       localStorage.removeItem("token");
-  //       navigate("/login", { replace: true });
-  //     } else {
-  //       // fetch...... 
-  //     }
-  //   }
-  // }, [isSubmitted, navigate]);
-
   const resultsUploadHandler = () => {
     setIsSubmitted(true);
     fetch("http://localhost:8080/uploadresults", {
