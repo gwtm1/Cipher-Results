@@ -11,21 +11,20 @@ const UploadResults = () => {
   const [batch, setBatch] = useState("");
   const [semesterNumber, setsSemesterNumber] = useState("");
   const [resultsFile, setResultsFile] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  // const [isSubmitted, setIsSubmitted] = useState(false);
 
   const resultsUploadHandler = () => {
-    setIsSubmitted(true);
+    // setIsSubmitted(true);
+    const body = new FormData();
+    body.append(resultsFile);
+    body.append({year, batch, semesterNumber})
     fetch("http://localhost:8080/uploadresults", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
+        "JWT-KEY": localStorage.getItem('jwtToken')
       },
-      body: JSON.stringify({
-        year,
-        batch,
-        semesterNumber,
-        resultsFile,
-      }),
+      body: body,
     })
       .then((res) => res.json())
       .then((data) => {

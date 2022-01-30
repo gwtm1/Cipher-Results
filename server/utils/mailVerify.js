@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import smtpTransport from "nodemailer-smtp-transport";
+// import smtpTransport from "nodemailer-smtp-transport";
 
 export function otpGenerator() {
   let otp = "";
@@ -20,14 +20,14 @@ export function otpGenerator() {
 //   });
 
 export const mailTransport = () => {
-  return nodemailer.createTransport(smtpTransport({
+  return nodemailer.createTransport({
     server: "gmail",
     host: 'smtp.gmail.com',
     auth: {
       user: process.env.GMAIL_USERNAME,
       pass: process.env.GMAIL_PASSWORD,
     },
-  }));
+  });
 };
 
 export const mailTemplate = (OTP) => {
