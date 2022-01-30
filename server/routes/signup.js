@@ -5,6 +5,6 @@ import { validateStudentSignup, validator } from "../middlewares/validator.js"
 const router = express.Router();
 
 router.post("/student", validateStudentSignup, validator, studentSignUp);
-router.post('/verifyemail', verifyEmail)
+router.post('/emailverify', verifyEmail)
 
 export default router;

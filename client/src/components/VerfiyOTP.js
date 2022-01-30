@@ -1,15 +1,20 @@
 import React,{ useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import css from "../css/VerifyOTP.module.css";
-// const NodeRSA = require('node-rsa');
+import { useNavigate } from "react-router-dom";
+const NodeRSA = require('node-rsa');
 
 const VerifyOTP = (props) => {
   const { userId } = props;
-  
+  const navigate = useNavigate();
   const [OTP, setOTP] = useState("");
 
   const onOTPChange = (event) => {
     setOTP(event.target.value);
+  };
+
+  const navigator = (endpoint) => {
+    navigate(endpoint, { replace: true });
   };
 
   const download = (filename, text) => {
@@ -29,14 +34,14 @@ const VerifyOTP = (props) => {
   };
 
   const generateKeyPair = () => {
-    // const key = new NodeRSA({ b: 1024 });
-    // const publicKey = key.exportKey('public');
-    // const privateKey = key.exportKey('private');
-    // return { publicKey, privateKey };
+    const key = new NodeRSA({ b: 1024 });
+    const publicKey = key.exportKey('public');
+    const privateKey = key.exportKey('private');
+    return { publicKey, privateKey };
   };
 
   const OTPSubmitHandler = () => {
-    // const { publicKey, privateKey } = generateKeyPair();
+    const { publicKey, privateKey } = generateKeyPair();
 
     fetch("http://localhost:8080/signup/emailverify", {
       method: "post",
@@ -46,7 +51,7 @@ const VerifyOTP = (props) => {
       body: JSON.stringify({
         userId,
         OTP,
-        // publicKey,
+        publicKey,
       }),
     })
       .then((res) => res.json())
@@ -55,7 +60,7 @@ const VerifyOTP = (props) => {
         if (data.error) {
           alert(data.error);
         } else {
-          // download("Private-Key.txt", privateKey);
+          download("Private-Key.txt", privateKey);
           navigator(`/login`);
         }
       });

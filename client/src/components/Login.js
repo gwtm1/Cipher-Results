@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
 const Login = (props) => {
-  const { createToken, loginStatus, collectUserDetails } = props
+  const {  loginStatus, collectUserDetails } = props
 
   const navigate = useNavigate();
 
@@ -52,7 +52,8 @@ const Login = (props) => {
           if (data.error) {
             alert(data.error);
           } else {
-            createToken(data.jwtToken);
+            // createToken(data.jwtToken);
+            localStorage.setItem('jwtTOken',data.jwtToken);
             collectUserDetails(data.userId);
             loginStatus(true);
             navigator("/viewresults");
@@ -78,6 +79,7 @@ const Login = (props) => {
           if (data.error) {
             alert(data.error);
           } else {
+            localStorage.setItem('jwtTOken',data.jwtToken);
             loginStatus(true);
             navigator("/uploadresults");
           }
