@@ -13,9 +13,9 @@ import pkg from "mongoose";
 const { isValidObjectId } = pkg;
 
 export const studentSignUp = async (req, res) => {
-  const { rollnumber, email, password } = req.body;
-
   try {
+    const { rollnumber, email, password } = req.body;
+
     const year1 = rollnumber.slice(0, 4);
     const batch1 = rollnumber.slice(4, 7);
     const rollnumber1 = rollnumber.slice(8, 11);
@@ -32,7 +32,10 @@ export const studentSignUp = async (req, res) => {
       rollnumber1.localeCompare(rollnumber2) ||
       domain1.localeCompare(domain2)
     ) {
-      return sendError(res, "Enter college emaid-id corresponding to the given roll number!");
+      return sendError(
+        res,
+        "Enter college emaid-id corresponding to the given roll number!"
+      );
     }
 
     let isEmailFound = await Students.findOne({ email });
@@ -43,9 +46,8 @@ export const studentSignUp = async (req, res) => {
       });
       await Students.findByIdAndDelete(isEmailFound._id);
       await VerificationToken.findByIdAndDelete(token._id);
-    }
-    else if (isEmailFound) {
-      return sendError(res, 'Already Signed Up')
+    } else if (isEmailFound) {
+      return sendError(res, "Already Signed Up");
     }
 
     let hashedPassword = await bcrypt.hash(password, 12);
@@ -83,7 +85,6 @@ export const studentSignUp = async (req, res) => {
         }
       }
     );
-
   } catch (error) {
     res.send(error.message);
     console.log(error);
@@ -91,9 +92,9 @@ export const studentSignUp = async (req, res) => {
 };
 
 export const verifyEmail = async (req, res) => {
-  const { userId, OTP } = req.body;
-
   try {
+    const { userId, OTP, publicKey } = req.body;
+
     if (!userId || !OTP) return sendError(res, "Please enter a valid OTP!!");
 
     const student = await Students.findById(userId);
@@ -108,13 +109,12 @@ export const verifyEmail = async (req, res) => {
     if (!isMatched) return sendError(res, "Please enter valid OTP!!");
 
     student.isVerified = true;
-
+    student.publicKey = publicKey;
+    
     await VerificationToken.findByIdAndDelete(token._id);
     await student.save();
 
     res.json({ success: true });
-
-
   } catch (error) {
     res.send(error);
     console.log(error);

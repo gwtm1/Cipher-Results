@@ -2,7 +2,7 @@ import { check, validationResult } from "express-validator";
 
 export const validateAdminLogin = [
   check("email").normalizeEmail().isEmail().withMessage("Email is invalid!"),
-  check("password").trim().not().isEmpty().withMessage("Password is missing!"),
+  check("adminPassword").trim().not().isEmpty().withMessage("Password is missing!"),
 ];
 
 export const validateStudentSignup = [
@@ -23,7 +23,7 @@ export const validateStudentLogin = [
   check("rollnumber", "Roll is not in specified format!").matches(
     /^\d{4}[A-Z]{3}\-\d{3}$/
   ),
-  check("password").trim().not().isEmpty().withMessage("Password is missing!"),
+  check("studentPassword").trim().not().isEmpty().withMessage("Password is missing!"),
 ];
 
 export const validator = (req, res, next) => {

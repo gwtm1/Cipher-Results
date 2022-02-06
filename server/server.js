@@ -21,9 +21,9 @@ mongoose
 
     const app = express();
     app.use(express.json());
-    app.use(cors());
+    app.use(cors({ origin: true }));
     app.use(bodyParser.urlencoded({ extended: true }));
-    // app.use(bodyParser.json());
+    app.use(bodyParser.json());
 
     app.use("/signup", signup);
     app.use("/login", login);

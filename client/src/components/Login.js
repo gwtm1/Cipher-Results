@@ -5,26 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
 const Login = (props) => {
-  const {  loginStatus, collectUserDetails } = props
+  const { loginStatus, collectUserDetails } = props;
 
   const navigate = useNavigate();
 
   const [rollnumber, setRollNumber] = useState("");
-  const [password, setPassword] = useState("");
+  const [studentPassword, setStudentPassword] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
   const [isStudent, setIsStudent] = useState(true);
   const [email, setEmail] = useState("");
-
-  const onrollNumberChange = (event) => {
-    setRollNumber(event.target.value);
-  };
-
-  const onEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const onPasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
 
   const onTabChange = (state) => {
     setIsStudent(state);
@@ -35,7 +24,6 @@ const Login = (props) => {
 
   const loginSubmitHandler = () => {
     if (isStudent) {
-
       fetch("http://localhost:8080/login/student", {
         method: "post",
         headers: {
@@ -43,7 +31,7 @@ const Login = (props) => {
         },
         body: JSON.stringify({
           rollnumber,
-          password,
+          studentPassword,
         }),
       })
         .then((res) => res.json())
@@ -53,7 +41,7 @@ const Login = (props) => {
             alert(data.error);
           } else {
             // createToken(data.jwtToken);
-            localStorage.setItem('jwtTOken',data.jwtToken);
+            localStorage.setItem("jwtToken", data.jwtToken);
             collectUserDetails(data.userId);
             loginStatus(true);
             navigator("/viewresults");
@@ -70,7 +58,7 @@ const Login = (props) => {
         },
         body: JSON.stringify({
           email,
-          password,
+          adminPassword,
         }),
       })
         .then((res) => res.json())
@@ -79,7 +67,7 @@ const Login = (props) => {
           if (data.error) {
             alert(data.error);
           } else {
-            localStorage.setItem('jwtTOken',data.jwtToken);
+            localStorage.setItem("jwtToken", data.jwtToken);
             loginStatus(true);
             navigator("/uploadresults");
           }
@@ -117,7 +105,9 @@ const Login = (props) => {
                 type="string"
                 placeholder="Enter Roll Number"
                 value={rollnumber}
-                onChange={onrollNumberChange}
+                onChange={(event) => {
+                  setRollNumber(event.target.value);
+                }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -126,8 +116,10 @@ const Login = (props) => {
                 className={css.inputs}
                 type="password"
                 placeholder="Password"
-                value={password}
-                onChange={onPasswordChange}
+                value={studentPassword}
+                onChange={(event) => {
+                  setStudentPassword(event.target.value);
+                }}
               />
             </Form.Group>
 
@@ -153,7 +145,9 @@ const Login = (props) => {
                 type="email"
                 placeholder="Enter college Email"
                 value={email}
-                onChange={onEmailChange}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
               />
             </Form.Group>
 
@@ -163,8 +157,10 @@ const Login = (props) => {
                 className={css.inputs}
                 type="password"
                 placeholder="Password"
-                value={password}
-                onChange={onPasswordChange}
+                value={adminPassword}
+                onChange={(event) => {
+                  setAdminPassword(event.target.value);
+                }}
               />
             </Form.Group>
 

@@ -17,14 +17,14 @@ const jwtTokenGenerator = (userId) =>{
 
 export const adminLogingIn = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, adminPassword } = req.body;
     let currAdmin = await Admins.findOne({ email });
     if (!currAdmin) {
-      return sendError(res, 400, "Invalid Email");
+      return sendError(res, "Invalid Email");
     }
-    let passwordMatch = bcrypt.compareSync(password, currAdmin.password);
+    let passwordMatch = bcrypt.compareSync(adminPassword, currAdmin.password);
     if (!passwordMatch) {
-      sendError(res, 400, "Mismatched Email ID or Password!");
+      sendError(res, "Mismatched Email ID or Password!");
     } else {
       const jwtToken = jwtTokenGenerator();
       res.json({
@@ -39,17 +39,17 @@ export const adminLogingIn = async (req, res) => {
 };
 export const studentLogingIn = async (req, res) => {
   try {
-    const { rollnumber, password } = req.body;
+    const { rollnumber, studentPassword } = req.body;
 
     let currStudent = await Students.findOne({ rollnumber });
     if (!currStudent) {
-      sendError(res, 400, "Roll Number not found");
+      sendError(res, "Roll Number not found");
     }
-    let passwordMatch = bcrypt.compareSync(password, currStudent.password);
+    let passwordMatch = bcrypt.compareSync(studentPassword, currStudent.password);
     if (!passwordMatch) {
-      sendError(res, 400, "Mismatched Roll Number or Password!");
+      sendError(res, "Mismatched Roll Number or Password!");
     } else {
-      jwtToken = jwtTokenGenerator();
+      const jwtToken = jwtTokenGenerator();
       res.json({
         success: true,
         userId: currStudent._id,

@@ -48,15 +48,6 @@ const Signup = (props) => {
         console.log(err);
       });
   };
-  const onEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-  const onrollNumberChange = (event) => {
-    setRollNumber(event.target.value);
-  };
-  const onPasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
 
   return (
     <Row className={css.mainrow}>
@@ -75,17 +66,21 @@ const Signup = (props) => {
               type="string"
               placeholder="20XXBCS-XXX or 20XXIMT-XXX or 20XXIMG-XXX"
               value={rollnumber}
-              onChange={onrollNumberChange}
+              onChange={(event) => {
+                setRollNumber(event.target.value);
+              }}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email</Form.Label>
             <Form.Control
               className={css.inputs}
-              type="string"
+              type="email"
               placeholder="Enter college mailId "
               value={email}
-              onChange={onEmailChange}
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -95,7 +90,9 @@ const Signup = (props) => {
               type="password"
               placeholder="Password"
               value={password}
-              onChange={onPasswordChange}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
             />
           </Form.Group>
 
