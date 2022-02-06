@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
@@ -13,16 +12,22 @@ const UploadResults = () => {
   const [resultsFile, setResultsFile] = useState("");
   // const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const resultsUploadHandler = () => {
-    // setIsSubmitted(true);
+  const resultsUploadHandler = (event) => {
+
+    event.preventDefault();
+
     const body = new FormData();
-    body.append(resultsFile);
-    body.append({year, batch, semesterNumber})
+    body.append('resultsFile.csv', resultsFile);
+    body.append('year', year);
+    body.append('batch',batch);
+    body.append('semesterNumber',semesterNumber);
+    
     fetch("http://localhost:8080/uploadresults", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        "JWT-KEY": localStorage.getItem('jwtToken')
+        "JWT-KEY": localStorage.getItem("jwtToken"),
+        "Access-Control-Allow-Origin" : "*",
       },
       body: body,
     })
@@ -38,39 +43,33 @@ const UploadResults = () => {
         console.log(err);
       });
   };
-  const onYearChange = (event) => {
-    setYear(event.target.value);
-  };
-  const onBatchChange = (event) => {
-    setBatch(event.target.value);
-  };
-  const onSemesterNumberChange = (event) => {
-    setsSemesterNumber(event.target.value);
-  };
-  const onResultsFileChange = (event) => {
-    setResultsFile(event.target.value);
-  };
 
   return (
     <div className={css.container}>
-      <Form className={css.widget}>
+      <Form className={css.widget} encType="multipart/form-data">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Year</Form.Label>
           <Form.Control
             value={year}
             type="number"
             placeholder="eg: 2019"
-            onChange={onYearChange}
+            onChange={(event) => {
+              setYear(event.target.value);
+            }}
           />
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label>Batch</Form.Label>
-          <Form.Select onChange={onBatchChange}>
-            <option>BCS</option>
-            <option>IMT</option>
-            <option>IMG</option>
-          </Form.Select>
+          <Form.Control
+              className={css.inputs}
+              type="string"
+              placeholder="Enter batch BCS/IMT/IMG "
+              value={batch}
+              onChange={(event) => {
+                setBatch(event.target.value);
+              }}
+            />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -79,17 +78,25 @@ const UploadResults = () => {
             value={semesterNumber}
             type="number"
             placeholder="Enter Semester Number"
-            onChange={onSemesterNumberChange}
+            onChange={(event) => {
+              setsSemesterNumber(event.target.value);
+            }}
           />
         </Form.Group>
 
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Upload Results CSV file</Form.Label>
-          <Form.Control type="file" onChange={onResultsFileChange} />
+          <Form.Control
+            type="file"
+            accept=".csv"
+            onChange={(event) => {
+              setResultsFile(event.target.files[0]);
+            }}
+          />
         </Form.Group>
 
         <Button
-          onClick={() => resultsUploadHandler()}
+          onClick={(event) => resultsUploadHandler(event)}
           variant="primary"
           type="submit"
         >
