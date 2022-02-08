@@ -1,9 +1,10 @@
 import express from 'express';
+import { verifyjwt } from '../middlewares/verifyjwt.js';
+import { uploadCSVFile } from "../middlewares/uploadCSV.js";
 import { uploadresults } from "../controllers/uploadresults.js";
-import { uploadFile } from "../middlewares/upload.js";
 
 const router = express.Router();
 
-router.post("", uploadFile, uploadresults);
+router.post("", verifyjwt, uploadCSVFile, uploadresults);
 
 export default router;

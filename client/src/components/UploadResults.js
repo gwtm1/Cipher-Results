@@ -1,10 +1,10 @@
-import { React, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { React, useState } from "react";
+// import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import css from "../css/UploadResults.module.css";
 
 const UploadResults = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [year, setYear] = useState("");
   const [batch, setBatch] = useState("");
@@ -26,7 +26,7 @@ const UploadResults = () => {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        "JWT-KEY": localStorage.getItem("jwtToken"),
+        "jwtkey": localStorage.getItem("jwtToken"),
         "Access-Control-Allow-Origin" : "*",
       },
       body: body,
@@ -37,6 +37,9 @@ const UploadResults = () => {
         if (data.error) {
           alert(data.error);
         } else {
+
+          // complete this
+
         }
       })
       .catch((err) => {
@@ -46,6 +49,7 @@ const UploadResults = () => {
 
   return (
     <div className={css.container}>
+      
       <Form className={css.widget} encType="multipart/form-data">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Year</Form.Label>
@@ -102,6 +106,7 @@ const UploadResults = () => {
         >
           Submit
         </Button>
+
       </Form>
     </div>
   );
