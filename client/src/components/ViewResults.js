@@ -1,31 +1,37 @@
 import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import css from "../css/ViewResults.module.css";
 
 const ViewResults = (props) => {
+  // const navigate = useNavigate();
+
   const { userId } = props;
   const [semester, setSemester] = useState("");
   const [privateKeyFile, setPrivateKeyFile] = useState("");
 
-  const resultsViewHandler = () => {
+  const resultsViewHandler = (event) => {
+
+    event.preventDefault();
 
     const body = new FormData();
     body.append(privateKeyFile);
     body.append({ semester, userId });
+
     fetch("http://localhost:8080/viewresults", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        "JWT-KEY": localStorage.getItem("jwtToken"),
+        jwtkey: localStorage.getItem("jwtToken"),
       },
       body: body,
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.error) {
           alert(data.error);
         } else {
+          // complete this
         }
       })
       .catch((err) => {
@@ -35,7 +41,8 @@ const ViewResults = (props) => {
 
   return (
     <div className={css.container}>
-      <Form className={css.widget}>
+
+      <Form className={css.widget} encType="multipart/form-data">
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Semester Number</Form.Label>
           <Form.Control
@@ -60,12 +67,13 @@ const ViewResults = (props) => {
         </Form.Group>
         <Button
           variant="primary"
-          onClick={() => resultsViewHandler()}
+          onClick={(event) => resultsViewHandler(event)}
           type="submit"
         >
           Submit
         </Button>
       </Form>
+
     </div>
   );
 };

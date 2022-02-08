@@ -20,13 +20,13 @@ var upload = multer({
   },
 }).single("resultsFile");
 
-export const uploadFile = (req, res, next) => {
+export const uploadCSVFile = (req, res, next) => {
   upload(req, res, function (err) {
     if (err) {
       res.send(err);
     } else {
-      res.send("Success, uploaded!");
-      // next();
+      // res.send("Success, uploaded!");
+      next();
     }
   });
 };
