@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from "bcryptjs";
 
 const jwtTokenGenerator = (userId) =>{
-  let jwtSecretKey = process.env.JWT_SECRETE;
+  let jwtSecretKey = process.env.jwtSecretKey;
     let data = {
         time: Date.now(),
         userId
@@ -26,7 +26,7 @@ export const adminLogingIn = async (req, res) => {
     if (!passwordMatch) {
       sendError(res, "Mismatched Email ID or Password!");
     } else {
-      const jwtToken = jwtTokenGenerator();
+      const jwtToken = jwtTokenGenerator(currAdmin._id);
       res.json({
         success: true,
         userId: currAdmin._id,
@@ -49,7 +49,7 @@ export const studentLogingIn = async (req, res) => {
     if (!passwordMatch) {
       sendError(res, "Mismatched Roll Number or Password!");
     } else {
-      const jwtToken = jwtTokenGenerator();
+      const jwtToken = jwtTokenGenerator(currStudent._id);
       res.json({
         success: true,
         userId: currStudent._id,
