@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 
-const resultSchema = mongoose.Schema({
-    semester: {
-        type: Number,
-        required : true
-    },
-    result: {
-        type: JSON,
-        result : true
-    }
-})
+// const resultSchema = mongoose.Schema({
+//     semester: {
+//         type: Number,
+//         required : true
+//     },
+//     grades: {
+//         type: JSON,
+//         result : true
+//     }
+// })
 
 const studentSchema = mongoose.Schema({
     rollnumber:{
@@ -28,6 +28,10 @@ const studentSchema = mongoose.Schema({
         type : String,
         required : true
     },
+    batch:{
+        type : String,
+        required: true
+    },
     isVerified :{
         type : Boolean,
         required : true,
@@ -38,9 +42,7 @@ const studentSchema = mongoose.Schema({
         // required : true,
         default : '',
     },
-    results:{
-        type: [resultSchema]
-    }
+    results:[String]
 
 })
 
