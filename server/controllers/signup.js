@@ -25,7 +25,7 @@ export const studentSignUp = async (req, res) => {
     const batch2 = email.slice(0, 3).toUpperCase();
     const domain2 = email.slice(11, 23);
     const rollnumber2 = email.slice(8, 11);
-
+    const batch = year1+batch1;
     if (
       year1.localeCompare(year2) ||
       batch1.localeCompare(batch2) ||
@@ -55,6 +55,7 @@ export const studentSignUp = async (req, res) => {
       rollnumber,
       email,
       password: hashedPassword,
+      batch
     });
 
     const OTP = otpGenerator();
