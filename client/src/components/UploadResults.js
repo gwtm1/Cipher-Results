@@ -7,19 +7,19 @@ const UploadResults = () => {
   // const navigate = useNavigate();
 
   const [year, setYear] = useState("");
-  const [batch, setBatch] = useState("");
+  const [group, setGroup] = useState("");
   const [semesterNumber, setsSemesterNumber] = useState("");
   const [resultsFile, setResultsFile] = useState("");
   // const [isSubmitted, setIsSubmitted] = useState(false);
 
   const resultsUploadHandler = (event) => {
 
-    event.preventDefault();
-
+    event.preventDefault();    
+    
     const body = new FormData();
-    body.append('resultsFile.csv', resultsFile);
+    body.append('resultsFile', resultsFile);
     body.append('year', year);
-    body.append('batch',batch);
+    body.append('group', group);
     body.append('semesterNumber',semesterNumber);
     
     fetch("http://localhost:8080/uploadresults", {
@@ -27,7 +27,7 @@ const UploadResults = () => {
       headers: {
         "Content-Type": "application/json",
         "jwtkey": localStorage.getItem("jwtToken"),
-        "Access-Control-Allow-Origin" : "*",
+        // "Access-Control-Allow-Origin" : "*",
       },
       body: body,
     })
@@ -64,14 +64,14 @@ const UploadResults = () => {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Batch</Form.Label>
+          <Form.Label>Group</Form.Label>
           <Form.Control
               className={css.inputs}
               type="string"
-              placeholder="Enter batch BCS/IMT/IMG "
-              value={batch}
+              placeholder="Enter group BCS/IMT/IMG "
+              value={group}
               onChange={(event) => {
-                setBatch(event.target.value);
+                setGroup(event.target.value);
               }}
             />
         </Form.Group>

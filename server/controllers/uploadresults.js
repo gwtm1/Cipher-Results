@@ -1,33 +1,53 @@
-import Students from "../models/student";
-import csv from 'csvtojson'
-const NodeRSA = require('node-rsa')
+import Students from "../models/student.js";
+import csv from "csvtojson";
+import NodeRSA from "node-rsa";
 
-export const uploadresults = (req, res, next) => {
-  try {    
-    const { year, batch, semesterNumber } = req.body;
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import path from "path";
 
-    console.log( year, batch, semesterNumber);
-    const 
-    const currBatch = await Students.find(batch);
-    const grades = await csv().fromFile(
-      __dirname+'../admin-uploads'
-    )
+export const uploadresults = async (req, res, next) => {
+  try {
+    const { year, group, semesterNumber } = req.body;
+
+    const batch = year + group;
+    const studentsList = await Students.find({ batch });
+
+    const __filename = fileURLToPath(import.meta.url);
+    let __dirname = dirname(__filename);
+
+    __dirname = path.join(
+      __dirname,
+      "..",
+      `admin-uploads/${year}${group}${semesterNumber}.csv`
+    );
+
+    const grades = await csv().fromFile(__dirname);
+
     const keyMap = new Map();
-    currBatch.map(student=>{
-      keyMap.set(student.rollNumber,student.publicKey);
-    })
+    studentsList.map((student) => {
+      keyMap.set(student.rollnumber, student.publicKey);
+    });
 
-    grades.forEach(grade =>{
-      const pubKey = new NodeRSA(keyMap.get(grade.rollNumber));
+    grades.forEach((grade) => {
+      const pubKey = new NodeRSA(keyMap.get(grade.rollnumber));
+
       let encryptedResult = pubKey
-      .encrypt(JSON.stringify(grade), "base64")
-      .toString();
-      const filter = {rollNumber:grade.rollNumber};
-      const update = {};
-      update[`grades.${semesterNumber - 1}`] = encryptedResult;
-      Students.findOneAndUpdate(filter,update);
+        .encrypt(JSON.stringify(grade), "base64")
+        .toString();
 
-    })
+      const filter = { rollnumber: grade.rollnumber };
+      const result = { semester: semesterNumber, encryptedResult }
+
+      Students.findOneAndUpdate(
+        filter,
+        { $push: { results: result } },
+      ).exec();
+
+      Students.updateOne;
+    });
+
+    res.send("Results Successfully uploades");
   } catch (error) {
     console.log(error.message);
   }

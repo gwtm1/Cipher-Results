@@ -9,6 +9,7 @@ export const verifyjwt = (req, res, next) => {
 
         if(verified) {
             // return res.send("Successfully Verified");
+            // res.header('Access-Control-Allow-Origin', '*');
             next();
         } 
         else{
