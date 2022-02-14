@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import css from "../css/Signup.module.css";
@@ -12,6 +14,18 @@ const Signup = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const notify = () => {
+    toast.info("🦄 Wow so easy!", {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const navigator = (endpoint) => {
     navigate(endpoint, { replace: true });
   };
@@ -21,7 +35,9 @@ const Signup = (props) => {
   };
 
   const formSubmitHandler = () => {
+    notify();
     setLoading(true);
+
     fetch("http://localhost:8080/signup/student", {
       method: "post",
       headers: {
@@ -50,70 +66,85 @@ const Signup = (props) => {
   };
 
   return (
-    <Row className={css.mainrow}>
-      <Col style={{ marginLeft: "2rem" }} className={css.widget}>
-        <Container>
-          <Col className="Logos">
-            <h1>Signup</h1>
-          </Col>
-        </Container>
+    <>
+      <Row className={css.mainrow}>
+        <Col style={{ marginLeft: "2rem" }} className={css.widget}>
+          <Container>
+            <Col className="Logos">
+              <h1>Signup</h1>
+            </Col>
+          </Container>
 
-        <Container className={css.form}>
-          <Form.Group className="mb-3" controlId="formBasicRollNumber">
-            <Form.Label>Roll Number</Form.Label>
-            <Form.Control
-              className={css.inputs}
-              type="string"
-              placeholder="20XXBCS-XXX or 20XXIMT-XXX or 20XXIMG-XXX"
-              value={rollnumber}
-              onChange={(event) => {
-                setRollNumber(event.target.value);
-              }}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              className={css.inputs}
-              type="email"
-              placeholder="Enter college mailId "
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              className={css.inputs}
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-            />
-          </Form.Group>
+          <Container className={css.form}>
+            <Form.Group className="mb-3" controlId="formBasicRollNumber">
+              <Form.Label>Roll Number</Form.Label>
+              <Form.Control
+                className={css.inputs}
+                type="string"
+                placeholder="20XXBCS-XXX or 20XXIMT-XXX or 20XXIMG-XXX"
+                value={rollnumber}
+                onChange={(event) => {
+                  setRollNumber(event.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                className={css.inputs}
+                type="email"
+                placeholder="Enter college mailId "
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                className={css.inputs}
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
+              />
+            </Form.Group>
 
-          <Button
-            variant="primary"
-            type="Send OTP"
-            onClick={() => formSubmitHandler()}
-          >
-            {loading ? "Loading..." : "Submit"}
-          </Button>
+            <Button
+              variant="primary"
+              type="Send OTP"
+              onClick={() => formSubmitHandler()}
+            >
+              {loading ? "Loading..." : "Submit"}
+            </Button>
 
-          <p className={css.dividingLine}>&#8195;Or&#8195;</p>
-          <Link className="signupText" to="/signup">
-            Already have an account? Login here
-          </Link>
-        </Container>
-      </Col>
-      <Col>
-        <div className={css.RightImage} />
-      </Col>
-    </Row>
+            <p className={css.dividingLine}>&#8195;Or&#8195;</p>
+            <Link className="signupText" to="/login">
+              Already have an account? Login here
+            </Link>
+          </Container>
+        </Col>
+        <Col>
+          <div className={css.RightImage} />
+        </Col>
+      </Row>
+      <Row>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />{" "}
+      </Row>
+    </>
   );
 };
 
