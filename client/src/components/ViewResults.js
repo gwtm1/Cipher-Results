@@ -15,17 +15,18 @@ const ViewResults = (props) => {
 
     event.preventDefault();
 
-    const body = new FormData();
-    body.append(privateKey);
-    body.append({ semester, userId });
+    // const body = new FormData();
+    // body.append(privateKey);
+    // body.append({ semester, userId });
 
     fetch("http://localhost:8080/viewresults", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
         jwtkey: localStorage.getItem("jwtToken"),
+        // "Access-Control-Allow-Origin" : "*"
       },
-      body: { semester,userId },
+      body: { semester, userId },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -33,7 +34,7 @@ const ViewResults = (props) => {
           alert(data.error);
         } else {
           // complete this
-          decryptResults(data)
+          decryptResults(data);
         }
       })
       .catch((err) => {
@@ -41,13 +42,13 @@ const ViewResults = (props) => {
       });
   };
 
-  const decryptResults = data =>{
+  const decryptResults = data => {
     const private_key = new NodeRSA(privateKey);
       const decryptedResult = private_key.decrypt(data.result, "utf8");
       console.log(decryptedResult);
   }
 
-  const onPrivateKeyChange = (event)=>{
+  const onPrivateKeyFileChange = (event) => {
     var fileReader = new FileReader();
     fileReader.onload = onFileLoad;
     fileReader.readAsText(event.target.files[0]);
@@ -77,7 +78,7 @@ const ViewResults = (props) => {
           <Form.Label>Upload Private Key</Form.Label>
           <Form.Control 
             type="file"
-            onChange={(event)=>{onPrivateKeyChange(event)}}   
+            onChange={(event)=>{onPrivateKeyFileChange(event)}}   
           />
         </Form.Group>
         <Button

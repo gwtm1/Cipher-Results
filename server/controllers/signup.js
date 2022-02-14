@@ -17,18 +17,19 @@ export const studentSignUp = async (req, res) => {
     const { rollnumber, email, password } = req.body;
 
     const year1 = rollnumber.slice(0, 4);
-    const batch1 = rollnumber.slice(4, 7);
+    const group1 = rollnumber.slice(4, 7);
     const rollnumber1 = rollnumber.slice(8, 11);
     const domain1 = "@iiitm.ac.in";
 
     const year2 = email.slice(4, 8);
-    const batch2 = email.slice(0, 3).toUpperCase();
+    const group2 = email.slice(0, 3).toUpperCase();
     const domain2 = email.slice(11, 23);
     const rollnumber2 = email.slice(8, 11);
-    const batch = year1+batch1;
+
+    const batch = year1 + group1;
     if (
       year1.localeCompare(year2) ||
-      batch1.localeCompare(batch2) ||
+      group1.localeCompare(group2) ||
       rollnumber1.localeCompare(rollnumber2) ||
       domain1.localeCompare(domain2)
     ) {
