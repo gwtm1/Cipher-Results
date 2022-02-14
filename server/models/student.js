@@ -5,9 +5,9 @@ import mongoose from 'mongoose';
 //         type: Number,
 //         required : true
 //     },
-//     grades: {
-//         type: JSON,
-//         result : true
+//     encryptedResult: {
+//         type: String,
+//         required : true
 //     }
 // })
 
@@ -32,17 +32,26 @@ const studentSchema = mongoose.Schema({
         type : String,
         required: true
     },
-    isVerified :{
+    isVerified: {
         type : Boolean,
         required : true,
         default : false,
     },
-    publicKey:{
+    publicKey: {
         type : String,
         // required : true,
         default : '',
     },
-    results:[String]
+    results: [{
+        semester: {
+            type: Number,
+            required : true
+        },
+        encryptedResult: {
+            type: String,
+            required : true
+        }
+    }]
 
 })
 
