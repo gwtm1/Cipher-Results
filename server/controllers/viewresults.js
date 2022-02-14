@@ -8,13 +8,16 @@ export const viewresults = async (req, res, next) => {
 
     const currStudent = await Students.findOne({_id: userId});
 
+    var count = 0;
     currStudent.results.map((result) => {
       if (result.semester === semester) {
         res.send({ result: result.encryptedResult });
+        count++;
       }
     });
-    sendError(res, "No results for entered semester");
+    if(count === 0)  sendError(res, "No results for entered semester");
   } catch (error) {
-    console.log(error.message);
+    sendError(res, error.message);
+    // console.log("1", error.message);
   }
 };

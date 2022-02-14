@@ -29,7 +29,7 @@ const UploadResults = () => {
         "jwtkey": localStorage.getItem("jwtToken"),
         // "Access-Control-Allow-Origin" : "*",
       },
-      body: body,
+      body: JSON.stringify(body),
     })
       .then((res) => res.json())
       .then((data) => {

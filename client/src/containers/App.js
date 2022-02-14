@@ -18,7 +18,7 @@ function App() {
   
   const loginStatus = (state)=>{
     setIsloggedIn(state);
-    setUserId('');
+    // setUserId('');
   }
   const collectUserDetails = (id)=>{
     setUserId(id);
