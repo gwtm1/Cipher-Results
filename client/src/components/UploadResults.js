@@ -1,13 +1,20 @@
-import { React, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { React, useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import css from "../css/UploadResults.module.css";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const UploadResults = (props) => {
-  // const navigate = useNavigate();
-  const { configToast } = props;
+  const navigate = useNavigate();
+  const { configToast, isloggedIn } = props;
+
+  useEffect(()=>{
+    if(!isloggedIn){
+      navigate("/login", { replace: true });
+    }
+  },[isloggedIn, navigate])
+
   const [year, setYear] = useState("");
   const [group, setGroup] = useState("");
   const [semesterNumber, setsSemesterNumber] = useState("");
