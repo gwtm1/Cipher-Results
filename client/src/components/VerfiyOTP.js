@@ -2,10 +2,12 @@ import React,{ useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import css from "../css/VerifyOTP.module.css";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const NodeRSA = require('node-rsa');
 
 const VerifyOTP = (props) => {
-  const { userId } = props;
+  const { userId, configToast } = props;
   const navigate = useNavigate();
   const [OTP, setOTP] = useState("");
 
@@ -40,7 +42,15 @@ const VerifyOTP = (props) => {
     return { publicKey, privateKey };
   };
 
+
   const OTPSubmitHandler = () => {
+
+    configToast();
+    if(!OTP){
+      toast('Please enter OTP');
+      return;
+    }
+
     const { publicKey, privateKey } = generateKeyPair();
 
     fetch("http://localhost:8080/signup/emailverify", {
@@ -58,8 +68,10 @@ const VerifyOTP = (props) => {
       .then((data) => {
         console.log(data);
         if (data.error) {
-          alert(data.error);
+          toast(data.error)
+          // alert(data.error);
         } else {
+          toast(data.message)
           download("Private-Key.txt", privateKey);
           navigator(`/login`);
         }

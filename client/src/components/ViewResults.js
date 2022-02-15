@@ -2,22 +2,26 @@ import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import css from "../css/ViewResults.module.css";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const NodeRSA = require("node-rsa");
 
 const ViewResults = (props) => {
   // const navigate = useNavigate();
 
-  const { userId } = props;
+  const { userId,configToast } = props;
   const [semester, setSemester] = useState("");
   const [privateKey, setPrivateKey] = useState("");
 
   const resultsViewHandler = (event) => {
     event.preventDefault();
+    configToast();
 
-    // const body = new FormData();
-    // body.append(privateKey);
-    // body.append({ semester, userId });
-    
+    if(!userId || !semester || !privateKey){
+      toast('Please fill all the fields');
+      return;
+    }
+
     fetch("http://localhost:8080/viewresults", {
       method: "post",
       headers: {
@@ -30,7 +34,8 @@ const ViewResults = (props) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          alert(data.error);
+          // alert(data.error);
+          toast(data.error)
         } else {
           // complete this
           decryptResults(data);

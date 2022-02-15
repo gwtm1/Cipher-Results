@@ -3,9 +3,11 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = (props) => {
-  const { loginStatus, collectUserDetails } = props;
+  const { loginStatus, collectUserDetails,configToast } = props;
 
   const navigate = useNavigate();
 
@@ -21,9 +23,17 @@ const Login = (props) => {
   const navigator = (route) => {
     navigate(route);
   };
+  
 
   const loginSubmitHandler = () => {
+    configToast()
     if (isStudent) {
+
+      if(!rollnumber || !studentPassword){
+        toast('Please fill all details');
+        return;
+      }
+
       fetch("http://localhost:8080/login/student", {
         method: "post",
         headers: {
@@ -38,9 +48,11 @@ const Login = (props) => {
         .then((data) => {
           console.log(data);
           if (data.error) {
-            alert(data.error);
+            toast(data.error)
+            // alert(data.error);
           } else {
             // createToken(data.jwtToken);
+            toast(data.message)
             localStorage.setItem("jwtToken", data.jwtToken);
             collectUserDetails(data.userId);
             loginStatus(true);
@@ -51,6 +63,12 @@ const Login = (props) => {
           console.log(err);
         });
     } else {
+
+      if(!email || !adminPassword){
+        toast('Please fill all feilds');
+        return;
+      }
+      
       fetch("http://localhost:8080/login/admin", {
         method: "post",
         headers: {
@@ -65,8 +83,10 @@ const Login = (props) => {
         .then((data) => {
           console.log(data);
           if (data.error) {
-            alert(data.error);
+            // alert(data.error);
+            toast(data.error);
           } else {
+            toast(data.message);
             localStorage.setItem("jwtToken", data.jwtToken);
             loginStatus(true);
             navigator("/uploadresults");

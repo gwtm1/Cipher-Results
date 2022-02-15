@@ -9,6 +9,8 @@ import Results from '../components/ViewResults';
 import VerifyOTP from '../components/VerfiyOTP';
 import Upload from '../components/UploadResults';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+
 
 function App() {
   
@@ -18,10 +20,18 @@ function App() {
   
   const loginStatus = (state)=>{
     setIsloggedIn(state);
-    // setUserId('');
+    if(state) setUserId('');
   }
   const collectUserDetails = (id)=>{
     setUserId(id);
+  }
+  const configToast = ()=>{
+    toast.configure({
+      pauseOnHover: true,
+      draggable: true,
+      autoClose: 3000,
+      position: toast.POSITION.BOTTOM_RIGHT
+    })
   }
   // const saveJWTToken = (token) =>{
   //   setJwtToken(token)
@@ -33,11 +43,11 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Homepage />}/> 
         
-        <Route exact path='/signup' element={<Signup  collectUserDetails={collectUserDetails}/>} />
-        <Route exact path='/login' element={<Login collectUserDetails={collectUserDetails} loginStatus={loginStatus}/>}/>
-        <Route exact path='/viewresults' element={<Results userId= {userId}/>}/>
-        <Route exact path='/uploadresults' element={<Upload />}/>
-        <Route exact path='/signup/verifyotp' element={<VerifyOTP userId= {userId} />} />
+        <Route exact path='/signup' element={<Signup configToast={configToast}  collectUserDetails={collectUserDetails}/>} />
+        <Route exact path='/login' element={<Login configToast={configToast} collectUserDetails={collectUserDetails} loginStatus={loginStatus}/>}/>
+        <Route exact path='/viewresults' element={<Results configToast={configToast} userId= {userId}/>}/>
+        <Route exact path='/uploadresults' element={<Upload configToast={configToast}/>}/>
+        <Route exact path='/signup/verifyotp' element={<VerifyOTP configToast={configToast} userId= {userId} />} />
         
       </Routes>
     )

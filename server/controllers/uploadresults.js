@@ -43,11 +43,9 @@ export const uploadresults = async (req, res, next) => {
         filter,
         { $push: { results: result } },
       ).exec();
-
-      Students.updateOne;
     });
 
-    res.send("Results Successfully uploades");
+    res.json({ message: "Results Successfully uploaded" });
   } catch (error) {
     console.log(error.message);
   }
