@@ -45,7 +45,7 @@ export const uploadresults = async (req, res, next) => {
       ).exec();
     });
 
-    res.json({ message: "Results Successfully uploaded" });
+    res.send({ message: "Results Successfully uploaded" });
   } catch (error) {
     console.log(error.message);
   }

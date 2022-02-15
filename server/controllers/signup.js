@@ -116,7 +116,7 @@ export const verifyEmail = async (req, res) => {
     await VerificationToken.findByIdAndDelete(token._id);
     await student.save();
 
-    res.json({ success: true, message: 'Verification successed, Please login again' });
+    res.json({ success: true, message: 'Verification successed, Please login', rollnumber: student.rollnumber });
   } catch (error) {
     res.send(error);
     console.log(error);

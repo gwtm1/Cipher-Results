@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import css from "../css/ViewResults.module.css";
 import { toast } from "react-toastify";
@@ -7,9 +7,15 @@ import 'react-toastify/dist/ReactToastify.css';
 const NodeRSA = require("node-rsa");
 
 const ViewResults = (props) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const { userId,configToast } = props;
+  const { userId,configToast,isloggedIn } = props;
+  useEffect(()=>{
+    if(!isloggedIn){
+      navigate("/login", { replace: true });
+    }
+  },[isloggedIn, navigate])
+  
   const [semester, setSemester] = useState("");
   const [privateKey, setPrivateKey] = useState("");
 

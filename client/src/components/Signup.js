@@ -15,6 +15,7 @@ const Signup = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+
   // const notify = () => {
   //   toast.info("🦄 Wow so easy!", {
   //     position: "bottom-right",
@@ -75,7 +76,6 @@ const Signup = (props) => {
   };
 
   return (
-    <>
       <Row className={css.mainrow}>
         <Col style={{ marginLeft: "2rem" }} className={css.widget}>
           <Container>
@@ -143,20 +143,6 @@ const Signup = (props) => {
           <div className={css.RightImage} />
         </Col>
       </Row>
-      <Row>
-        {/* <ToastContainer
-          position="bottom-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />{" "} */}
-      </Row>
-    </>
   );
 };
 

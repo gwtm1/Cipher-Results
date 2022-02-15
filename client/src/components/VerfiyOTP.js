@@ -72,7 +72,7 @@ const VerifyOTP = (props) => {
           // alert(data.error);
         } else {
           toast(data.message)
-          download("Private-Key.txt", privateKey);
+          download(`${data.rollnumber} - Private-Key.txt`, privateKey);
           navigator(`/login`);
         }
       });
