@@ -29,6 +29,7 @@ export const adminLogingIn = async (req, res) => {
       const jwtToken = jwtTokenGenerator(currAdmin._id);
       res.json({
         success: true,
+        message: 'Successfully Logged In',
         userId: currAdmin._id,
         jwtToken
       });
@@ -52,6 +53,7 @@ export const studentLogingIn = async (req, res) => {
       const jwtToken = jwtTokenGenerator(currStudent._id);
       res.json({
         success: true,
+        message: 'Successfully Logged In',
         userId: currStudent._id,
         jwtToken
       });

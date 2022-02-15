@@ -2,10 +2,12 @@ import { React, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import css from "../css/UploadResults.module.css";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-const UploadResults = () => {
+const UploadResults = (props) => {
   // const navigate = useNavigate();
-
+  const { configToast } = props;
   const [year, setYear] = useState("");
   const [group, setGroup] = useState("");
   const [semesterNumber, setsSemesterNumber] = useState("");
@@ -15,7 +17,12 @@ const UploadResults = () => {
   const resultsUploadHandler = (event) => {
 
     event.preventDefault();    
-    
+    configToast();
+    if(!year || !group || !semesterNumber || !resultsFile){
+      toast('Please fill all the fields');
+      return;
+    }
+
     const body = new FormData();
     body.append('resultsFile', resultsFile);
     body.append('year', year);
@@ -35,11 +42,10 @@ const UploadResults = () => {
       .then((data) => {
         console.log(data);
         if (data.error) {
-          alert(data.error);
+          // alert(data.error);
+          toast(data.error);
         } else {
-
-          // complete this
-
+          toast(data.message);
         }
       })
       .catch((err) => {

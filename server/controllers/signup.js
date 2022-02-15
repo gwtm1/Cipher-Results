@@ -67,7 +67,7 @@ export const studentSignUp = async (req, res) => {
 
     await verificationToken.save();
     await newstudent.save();
-    res.json({ userId: newstudent._id });
+    res.json({ userId: newstudent._id, message:'OTP sent to email' });
 
     mailTransport().sendMail(
       {
@@ -116,7 +116,7 @@ export const verifyEmail = async (req, res) => {
     await VerificationToken.findByIdAndDelete(token._id);
     await student.save();
 
-    res.json({ success: true });
+    res.json({ success: true, message: 'Verification successed, Please login again' });
   } catch (error) {
     res.send(error);
     console.log(error);

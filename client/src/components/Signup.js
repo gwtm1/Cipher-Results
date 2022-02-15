@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import css from "../css/Signup.module.css";
 
 const Signup = (props) => {
-  const { collectUserDetails } = props;
+  const { collectUserDetails, configToast } = props;
 
   const navigate = useNavigate();
   const [rollnumber, setRollNumber] = useState("");
@@ -14,18 +15,18 @@ const Signup = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const notify = () => {
-    toast.info("🦄 Wow so easy!", {
-      position: "bottom-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-
+  // const notify = () => {
+  //   toast.info("🦄 Wow so easy!", {
+  //     position: "bottom-right",
+  //     autoClose: 3000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //   });
+  // };
+ 
   const navigator = (endpoint) => {
     navigate(endpoint, { replace: true });
   };
@@ -34,8 +35,14 @@ const Signup = (props) => {
     setLoading(false);
   };
 
+
+
   const formSubmitHandler = () => {
-    notify();
+    configToast()
+    if(!rollnumber || !email || !password){
+      toast('All fields are necessary');
+      return;
+    }
     setLoading(true);
 
     fetch("http://localhost:8080/signup/student", {
@@ -52,9 +59,11 @@ const Signup = (props) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          alert(data.error);
+          // alert(data.error);
+          toast(data.error)
           navigator("/signup");
         } else {
+          toast(data.message)
           setstates();
           collectUserDetails(data.userId);
           navigator("/signup/verifyotp");
@@ -79,6 +88,7 @@ const Signup = (props) => {
             <Form.Group className="mb-3" controlId="formBasicRollNumber">
               <Form.Label>Roll Number</Form.Label>
               <Form.Control
+                required 
                 className={css.inputs}
                 type="string"
                 placeholder="20XXBCS-XXX or 20XXIMT-XXX or 20XXIMG-XXX"
@@ -91,6 +101,7 @@ const Signup = (props) => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
+                required
                 className={css.inputs}
                 type="email"
                 placeholder="Enter college mailId "
@@ -103,6 +114,7 @@ const Signup = (props) => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                required
                 className={css.inputs}
                 type="password"
                 placeholder="Password"
@@ -132,7 +144,7 @@ const Signup = (props) => {
         </Col>
       </Row>
       <Row>
-        <ToastContainer
+        {/* <ToastContainer
           position="bottom-right"
           autoClose={3000}
           hideProgressBar={false}
@@ -142,7 +154,7 @@ const Signup = (props) => {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-        />{" "}
+        />{" "} */}
       </Row>
     </>
   );

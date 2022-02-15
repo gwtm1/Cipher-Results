@@ -11,7 +11,7 @@ export const viewresults = async (req, res, next) => {
     var count = 0;
     currStudent.results.map((result) => {
       if (result.semester === semester) {
-        res.send({ result: result.encryptedResult });
+        res.json({ result: result.encryptedResult });
         count++;
       }
     });
