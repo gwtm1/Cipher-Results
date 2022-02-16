@@ -15,8 +15,12 @@ import { toast } from "react-toastify";
 function App() {
   const [isloggedIn, setIsloggedIn] = useState(false);
   const [userId, setUserId] = useState("");
+  const [results, setResults] = useState({});
   // const [jwtToken,setJwtToken] = useState('')
 
+  const collectResults = (decreptedResults) => {
+    setResults(decreptedResults);
+  }
   const loginStatus = (state) => {
     setIsloggedIn(state);
     if (!state) setUserId("");
@@ -70,6 +74,7 @@ function App() {
               isloggedIn={isloggedIn}
               configToast={configToast}
               userId={userId}
+              collectResults={collectResults}
             />
           }
         />

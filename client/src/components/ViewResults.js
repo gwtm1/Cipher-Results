@@ -9,7 +9,7 @@ const NodeRSA = require("node-rsa");
 const ViewResults = (props) => {
   const navigate = useNavigate();
 
-  const { userId,configToast,isloggedIn } = props;
+  const { userId, configToast, isloggedIn, collectResults } = props;
   useEffect(()=>{
     if(!isloggedIn){
       navigate("/login", { replace: true });
@@ -55,7 +55,7 @@ const ViewResults = (props) => {
   const decryptResults = (data) => {
     const private_key = new NodeRSA(privateKey);
     const decryptedResult = private_key.decrypt(data.result, "utf8");
-    console.log(decryptedResult);
+    collectResults(decryptedResult);
   };
 
   const onPrivateKeyFileChange = (event) => {
