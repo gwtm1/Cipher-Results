@@ -91,7 +91,7 @@ function App() {
         <Route
           exact
           path="/viewresults/display"
-          element={<DisplayResults isloggedIn={isloggedIn} />}
+          element={<DisplayResults isloggedIn={isloggedIn} results={results} />}
         />
       </Routes>
     );
@@ -101,11 +101,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header isloggedIn={isloggedIn} logout={loginStatus} />
-        <Routing
-          loggingIn={collectUserDetails}
-          isloggedIn={isloggedIn}
-          userId={userId}
-        />
+        <Routing />
       </BrowserRouter>
     </div>
   );
