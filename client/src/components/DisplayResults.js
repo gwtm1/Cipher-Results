@@ -1,9 +1,16 @@
-import React from "react";
+import React,{useNavigate} from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 
 const DisplayResults = (props) => {
-  const { results } = props;
+  const { results,isloggedIn } = props;
   const { sub1, sub2, sub3 } = results;
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!isloggedIn){
+      navigate("/login", { replace: true });
+    }
+  },[isloggedIn, navigate])
 
   return (
     <Row>
