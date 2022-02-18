@@ -55,7 +55,9 @@ const ViewResults = (props) => {
   const decryptResults = (data) => {
     const private_key = new NodeRSA(privateKey);
     const decryptedResult = private_key.decrypt(data.result, "utf8");
+    console.log(decryptedResult)
     collectResults(decryptedResult);
+    navigate("/viewresults/display", { replace: true })
   };
 
   const onPrivateKeyFileChange = (event) => {

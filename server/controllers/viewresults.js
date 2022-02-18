@@ -10,7 +10,7 @@ export const viewresults = async (req, res, next) => {
 
     var count = 0;
     currStudent.results.map((result) => {
-      if (result.semester === semester) {
+      if (result.semester == semester) {
         res.json({ result: result.encryptedResult });
         count++;
       }
@@ -18,6 +18,5 @@ export const viewresults = async (req, res, next) => {
     if(count === 0)  sendError(res, "No results for entered semester");
   } catch (error) {
     sendError(res, error.message);
-    // console.log("1", error.message);
   }
 };

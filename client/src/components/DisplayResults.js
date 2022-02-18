@@ -1,9 +1,13 @@
-import React,{useNavigate} from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// import { Container, Row, Col, Form } from "react-bootstrap";
 
 const DisplayResults = (props) => {
-  const { results,isloggedIn } = props;
-  const { sub1, sub2, sub3 } = results;
+  const { results, isloggedIn } = props;
+  const { sub1, sub2, sub3 } = JSON.parse(results);
+
+  console.log();
+  
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -12,38 +16,15 @@ const DisplayResults = (props) => {
     }
   },[isloggedIn, navigate])
 
-  return (
-    <Row>
-      <col>
-        <Container>
-          <Col className="">
-            <h1>Semester Results</h1>
-          </Col>
-        </Container>
-        <Form.Group className="mb-3" controlId="formBasicRollNumber">
-          <Form.Label>Subject 1</Form.Label>
-          <Form.Control
-            // className={css.inputs}
-            value={sub1}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicRollNumber">
-          <Form.Label>Subject 2</Form.Label>
-          <Form.Control
-            // className={css.inputs}
-            value={sub2}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicRollNumber">
-          <Form.Label>Subject 3</Form.Label>
-          <Form.Control
-            // className={css.inputs}
-            value={sub3}
-          />
-        </Form.Group>
-      </col>
-    </Row>
+  return(
+    <div>
+       <div >Results</div>
+       <div> sub1 : {sub1} </div>
+       <div> sub2 : {sub2} </div>
+       <div> sub3 : {sub3} </div>
+    </div>
   );
+
 };
 
 export default DisplayResults;
