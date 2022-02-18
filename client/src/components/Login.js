@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = (props) => {
-  const { loginStatus, collectUserDetails,configToast } = props;
+  const { loginStatus, collectUserDetails, configToast } = props;
 
   const navigate = useNavigate();
 
@@ -23,13 +23,15 @@ const Login = (props) => {
   const navigator = (route) => {
     navigate(route);
   };
-  
 
-  const loginSubmitHandler = () => {
+
+  const loginSubmitHandler = (event) => {
+    event.preventDefault();    
+    
     configToast()
     if (isStudent) {
 
-      if(!rollnumber || !studentPassword){
+      if (!rollnumber || !studentPassword) {
         toast('Please fill all details');
         return;
       }
@@ -61,14 +63,15 @@ const Login = (props) => {
         })
         .catch((err) => {
           console.log(err);
+          toast('Oops! Something went wrong 😥')
         });
     } else {
 
-      if(!email || !adminPassword){
+      if (!email || !adminPassword) {
         toast('Please fill all feilds');
         return;
       }
-      
+
       fetch("http://localhost:8080/login/admin", {
         method: "post",
         headers: {
@@ -94,11 +97,14 @@ const Login = (props) => {
         })
         .catch((err) => {
           console.log(err);
+          toast('Oops! Something went wrong 😥')
         });
     }
   };
 
   return (
+    
+    <form  onSubmit={(event) => loginSubmitHandler(event)}>
     <Row className={css.mainrow}>
       <Col style={{ marginLeft: "1.5rem" }} className={css.widget}>
         <Container>
@@ -185,7 +191,6 @@ const Login = (props) => {
             </Form.Group>
 
             <Button
-              onClick={() => loginSubmitHandler()}
               variant="primary"
               type="submit"
             >
@@ -198,6 +203,7 @@ const Login = (props) => {
         <div className={css.RightImage} />
       </Col>
     </Row>
+    </form>
   );
 };
 

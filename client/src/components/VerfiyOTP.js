@@ -43,8 +43,8 @@ const VerifyOTP = (props) => {
   };
 
 
-  const OTPSubmitHandler = () => {
-
+  const OTPSubmitHandler = (event) => {
+    event.preventDefault()
     configToast();
     if(!OTP){
       toast('Please enter OTP');
@@ -79,6 +79,7 @@ const VerifyOTP = (props) => {
   };
 
   return (
+    <form onSubmit={(event)=>OTPSubmitHandler(event)}>
     <Container className={css.form}>
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Check your Email</Form.Label>
@@ -93,9 +94,9 @@ const VerifyOTP = (props) => {
       <Button
         variant="primary"
         type="Submit"
-        onClick={() => OTPSubmitHandler()}
       ></Button>
     </Container>
+    </form>
   );
 };
 export default VerifyOTP;

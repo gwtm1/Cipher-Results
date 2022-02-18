@@ -49,6 +49,7 @@ const ViewResults = (props) => {
       })
       .catch((err) => {
         console.log(err);
+        toast('Oops! Something went wrong 😥')
       });
   };
 

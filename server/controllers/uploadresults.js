@@ -29,7 +29,9 @@ export const uploadresults = async (req, res, next) => {
       keyMap.set(student.rollnumber, student.publicKey);
     });
 
-    grades.forEach((grade) => {
+    grades.forEach(async (grade) => {
+      const student = await Students.findOne({rollnumber: grade.rollnumber})
+      if(!student){return}
       const pubKey = new NodeRSA(keyMap.get(grade.rollnumber));
 
       let encryptedResult = pubKey
@@ -37,12 +39,9 @@ export const uploadresults = async (req, res, next) => {
         .toString();
 
       const filter = { rollnumber: grade.rollnumber };
-      const result = { semester: semesterNumber, encryptedResult }
+      const result = { semester: semesterNumber, encryptedResult };
 
-      Students.findOneAndUpdate(
-        filter,
-        { $push: { results: result } },
-      ).exec();
+      Students.findOneAndUpdate(filter, { $push: { results: result } }).exec();
     });
 
     res.send({ message: "Results Successfully uploaded" });
