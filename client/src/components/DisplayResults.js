@@ -1,30 +1,60 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { Container, Row, Col, Form } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
 const DisplayResults = (props) => {
   const { results, isloggedIn } = props;
   const { sub1, sub2, sub3 } = JSON.parse(results);
 
-  console.log();
-  
+  console.log(Object.keys(results));
+
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(!isloggedIn){
+  useEffect(() => {
+    if (!isloggedIn) {
       navigate("/login", { replace: true });
     }
-  },[isloggedIn, navigate])
+  }, [isloggedIn, navigate]);
 
-  return(
-    <div>
-       <div >Results</div>
-       <div> sub1 : {sub1} </div>
-       <div> sub2 : {sub2} </div>
-       <div> sub3 : {sub3} </div>
-    </div>
+  return (
+    <Table bordered hover variant="dark">
+      {/* <thead>
+        <tr>
+          <th> {} </th>
+        </tr>
+      </thead>
+      <thead>
+        <tr>
+          <th> Subject </th>
+        </tr>
+      </thead> */}
+      <thead>
+        <tr>
+          <th> Subject </th>
+          <th> Grade </th>
+        </tr>
+      </thead>
+      <tbody>
+        {/* {Object.keys(results).map((subject) => (
+          <tr>
+            <td>{subject}</td> <td> {results[subject]}</td>
+          </tr>
+        ))} */}
+        <tr>
+          <td>Subject1</td>
+          <td>{sub1}</td>
+        </tr>
+        <tr>
+          <td>Subject2</td>
+          <td>{sub2}</td>
+        </tr>
+        <tr>
+          <td>Subject3</td>
+          <td>{sub3}</td>
+        </tr>
+      </tbody>
+    </Table>
   );
-
 };
 
 export default DisplayResults;

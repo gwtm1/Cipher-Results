@@ -14,9 +14,10 @@ export const viewresults = async (req, res, next) => {
         res.json({ result: result.encryptedResult });
         count++;
       }
+      else return;
     });
     if(count === 0)  sendError(res, "No results for entered semester");
   } catch (error) {
-    sendError(res, error.message);
+    // sendError(res, error.message);
   }
 };

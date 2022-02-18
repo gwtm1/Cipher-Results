@@ -27,7 +27,7 @@ const Signup = (props) => {
   //     progress: undefined,
   //   });
   // };
- 
+
   const navigator = (endpoint) => {
     navigate(endpoint, { replace: true });
   };
@@ -38,9 +38,10 @@ const Signup = (props) => {
 
 
 
-  const formSubmitHandler = () => {
+  const formSubmitHandler = (event) => {
+    event.preventDefault();    
     configToast()
-    if(!rollnumber || !email || !password){
+    if (!rollnumber || !email || !password) {
       toast('All fields are necessary');
       return;
     }
@@ -72,77 +73,79 @@ const Signup = (props) => {
       })
       .catch((err) => {
         console.log(err);
+        toast('Oops! Something went wrong 😥')
       });
   };
 
   return (
-      <Row className={css.mainrow}>
-        <Col style={{ marginLeft: "2rem" }} className={css.widget}>
-          <Container>
-            <Col className="Logos">
-              <h1>Signup</h1>
-            </Col>
-          </Container>
+    <form onSubmit={(event)=>formSubmitHandler(event)}>
+    <Row className={css.mainrow}>
+      <Col style={{ marginLeft: "2rem" }} className={css.widget}>
+        <Container>
+          <Col className="Logos">
+            <h1>Signup</h1>
+          </Col>
+        </Container>
 
-          <Container className={css.form}>
-            <Form.Group className="mb-3" controlId="formBasicRollNumber">
-              <Form.Label>Roll Number</Form.Label>
-              <Form.Control
-                required 
-                className={css.inputs}
-                type="string"
-                placeholder="20XXBCS-XXX or 20XXIMT-XXX or 20XXIMG-XXX"
-                value={rollnumber}
-                onChange={(event) => {
-                  setRollNumber(event.target.value);
-                }}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                required
-                className={css.inputs}
-                type="email"
-                placeholder="Enter college mailId "
-                value={email}
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                className={css.inputs}
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
-              />
-            </Form.Group>
+        <Container className={css.form}>
+          <Form.Group className="mb-3" controlId="formBasicRollNumber">
+            <Form.Label>Roll Number</Form.Label>
+            <Form.Control
+              required
+              className={css.inputs}
+              type="string"
+              placeholder="20XXBCS-XXX or 20XXIMT-XXX or 20XXIMG-XXX"
+              value={rollnumber}
+              onChange={(event) => {
+                setRollNumber(event.target.value);
+              }}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              required
+              className={css.inputs}
+              type="email"
+              placeholder="Enter college mailId "
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              required
+              className={css.inputs}
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
+            />
+          </Form.Group>
 
-            <Button
-              variant="primary"
-              type="Send OTP"
-              onClick={() => formSubmitHandler()}
-            >
-              {loading ? "Loading..." : "Submit"}
-            </Button>
+          <Button
+            variant="primary"
+            type="Send OTP"
+          >
+            {loading ? "Loading..." : "Submit"}
+          </Button>
 
-            <p className={css.dividingLine}>&#8195;Or&#8195;</p>
-            <Link className="signupText" to="/login">
-              Already have an account? Login here
-            </Link>
-          </Container>
-        </Col>
-        <Col>
-          <div className={css.RightImage} />
-        </Col>
-      </Row>
+          <p className={css.dividingLine}>&#8195;Or&#8195;</p>
+          <Link className="signupText" to="/login">
+            Already have an account? Login here
+          </Link>
+        </Container>
+      </Col>
+      <Col>
+        <div className={css.RightImage} />
+      </Col>
+    </Row>
+    </form>
   );
 };
 
