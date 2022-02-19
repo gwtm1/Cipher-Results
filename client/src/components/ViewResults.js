@@ -10,11 +10,11 @@ const ViewResults = (props) => {
   const navigate = useNavigate();
 
   const { userId, configToast, isloggedIn, collectResults } = props;
-  useEffect(()=>{
-    if(!isloggedIn){
-      navigate("/login", { replace: true });
-    }
-  },[isloggedIn, navigate])
+  // useEffect(()=>{
+  //   if(!isloggedIn){
+  //     navigate("/login", { replace: true });
+  //   }
+  // },[isloggedIn, navigate])
   
   const [semester, setSemester] = useState("");
   const [privateKey, setPrivateKey] = useState("");
@@ -74,6 +74,7 @@ const ViewResults = (props) => {
   return (
     <div className={css.container}>
       <Form className={css.widget} encType="multipart/form-data">
+
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Semester Number</Form.Label>
           <Form.Control
@@ -95,6 +96,7 @@ const ViewResults = (props) => {
             }}
           />
         </Form.Group>
+
         <Button
           variant="primary"
           onClick={(event) => resultsViewHandler(event)}
@@ -102,6 +104,7 @@ const ViewResults = (props) => {
         >
           Submit
         </Button>
+
       </Form>
     </div>
   );

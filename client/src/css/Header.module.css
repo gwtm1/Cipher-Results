@@ -1,9 +1,29 @@
-.navLinks{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+.navLinks {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
-.header{
-    width:100%;
-    background-color: burlywood;
+.header1 {
+  padding: 0;
+  width: 100%;
+  background-color: #bae8e8;
+  min-height: 50px;
+}
+
+.logo{
+    height: auto;
+    padding: auto;
+    font-size: large;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    transform: translateX(-40px);
+}
+
+
+.links {
+  color: #fffffe;
+  font-size: large;
+  height: auto;
+  padding: 1rem;
+  background-color: #bae8e8;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }

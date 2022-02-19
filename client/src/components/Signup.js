@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,7 +14,6 @@ const Signup = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   // const notify = () => {
   //   toast.info("🦄 Wow so easy!", {
@@ -36,13 +35,11 @@ const Signup = (props) => {
     setLoading(false);
   };
 
-
-
   const formSubmitHandler = (event) => {
-    event.preventDefault();    
-    configToast()
+    event.preventDefault();
+    configToast();
     if (!rollnumber || !email || !password) {
-      toast('All fields are necessary');
+      toast("All fields are necessary");
       return;
     }
     setLoading(true);
@@ -62,10 +59,10 @@ const Signup = (props) => {
       .then((data) => {
         if (data.error) {
           // alert(data.error);
-          toast(data.error)
+          toast(data.error);
           navigator("/signup");
         } else {
-          toast(data.message)
+          toast(data.message);
           setstates();
           collectUserDetails(data.userId);
           navigator("/signup/verifyotp");
@@ -73,78 +70,79 @@ const Signup = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        toast('Oops! Something went wrong 😥')
+        toast("Oops! Something went wrong 😥");
       });
   };
 
   return (
-    <form onSubmit={(event)=>formSubmitHandler(event)}>
-    <Row className={css.mainrow}>
-      <Col style={{ marginLeft: "2rem" }} className={css.widget}>
-        <Container>
-          <Col className="Logos">
-            <h1>Signup</h1>
-          </Col>
-        </Container>
+    <form
+      onSubmit={(event) => formSubmitHandler(event)}
+      className={css.mainrow}
+    >
+      <Row>
+        <Col style={{ marginLeft: "2rem" }} className={css.widget}>
+          <Container className={css.formContainer}>
+            <div className={css.form}>
+              <Container>
+                <Col className={css.heading}>
+                  <h1>Signup</h1>
+                </Col>
+              </Container>
+              <Form.Group className="mb-3" controlId="formBasicRollNumber">
+                <Form.Label>Roll Number</Form.Label>
+                <Form.Control
+                  required
+                  className={css.inputs}
+                  type="string"
+                  placeholder="20XXBCS-XXX"
+                  value={rollnumber}
+                  onChange={(event) => {
+                    setRollNumber(event.target.value);
+                  }}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  required
+                  className={css.inputs}
+                  type="email"
+                  placeholder="Enter college mail Id "
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  required
+                  className={css.inputs}
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
+                />
+              </Form.Group>
 
-        <Container className={css.form}>
-          <Form.Group className="mb-3" controlId="formBasicRollNumber">
-            <Form.Label>Roll Number</Form.Label>
-            <Form.Control
-              required
-              className={css.inputs}
-              type="string"
-              placeholder="20XXBCS-XXX or 20XXIMT-XXX or 20XXIMG-XXX"
-              value={rollnumber}
-              onChange={(event) => {
-                setRollNumber(event.target.value);
-              }}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              required
-              className={css.inputs}
-              type="email"
-              placeholder="Enter college mailId "
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              required
-              className={css.inputs}
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-            />
-          </Form.Group>
+              <Button variant="light" type="Send OTP" id={css.button}>
+                {loading ? "Loading..." : "Submit"}
+              </Button>
 
-          <Button
-            variant="primary"
-            type="Send OTP"
-          >
-            {loading ? "Loading..." : "Submit"}
-          </Button>
-
-          <p className={css.dividingLine}>&#8195;Or&#8195;</p>
-          <Link className="signupText" to="/login">
-            Already have an account? Login here
-          </Link>
-        </Container>
-      </Col>
-      <Col>
-        <div className={css.RightImage} />
-      </Col>
-    </Row>
+              <p className={css.dividingLine}>&#8195;Or&#8195;</p>
+              <Link className={css.signupText} to="/login">
+                Already have an account? Login here
+              </Link>
+            </div>
+          </Container>
+        </Col>
+        <Col>
+          <div className={css.RightImage} />
+        </Col>
+      </Row>
     </form>
   );
 };

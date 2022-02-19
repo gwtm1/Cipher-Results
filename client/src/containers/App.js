@@ -11,6 +11,7 @@ import Upload from "../components/UploadResults";
 import DisplayResults from "../components/DisplayResults";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import '../css/global.css'
 
 function App() {
   const [isloggedIn, setIsloggedIn] = useState(false);

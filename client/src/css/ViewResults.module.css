@@ -17,5 +17,6 @@
     width:125%;
     margin-top: 25%;
     padding: 2rem;
-    border-color: black;
+    border: 1px solid palevioletred;
+    box-shadow: 5px 10px #e53170;
 }
