@@ -44,7 +44,7 @@ const Signup = (props) => {
     }
     setLoading(true);
 
-    fetch("http://localhost:8080/signup/student", {
+    fetch("https://cipher-results-api.herokuapp.com/signup/student", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

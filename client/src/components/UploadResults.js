@@ -49,7 +49,7 @@ const UploadResults = (props) => {
     for (var key of formData.entries()) {
       console.log(key[0] + ', ' + key[1]);
     }
-    fetch("http://localhost:8080/uploadresults", {
+    fetch("https://cipher-results-api.herokuapp.com/uploadresults", {
       method: "post",
       headers: {
 

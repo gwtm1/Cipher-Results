@@ -52,7 +52,7 @@ const VerifyOTP = (props) => {
 
     const { publicKey, privateKey } = generateKeyPair();
 
-    fetch("http://localhost:8080/signup/emailverify", {
+    fetch("https://cipher-results-api.herokuapp.com/signup/emailverify", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
