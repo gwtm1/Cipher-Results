@@ -31,7 +31,7 @@ const ViewResults = (props) => {
       toast("Please enter a valid semester");
       return;
     }
-    fetch("http://localhost:8080/viewresults", {
+    fetch("https://cipher-results-api.herokuapp.com/viewresults", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

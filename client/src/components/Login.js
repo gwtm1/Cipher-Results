@@ -32,7 +32,7 @@ const Login = (props) => {
         return;
       }
 
-      fetch("http://localhost:8080/login/student", {
+      fetch("https://cipher-results-api.herokuapp.com/login/student", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +67,7 @@ const Login = (props) => {
         return;
       }
 
-      fetch("http://localhost:8080/login/admin", {
+      fetch("https://cipher-results-api.herokuapp.com/login/admin", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
