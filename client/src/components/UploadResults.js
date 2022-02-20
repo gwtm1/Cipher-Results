@@ -4,7 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import css from "../css/UploadResults.module.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+// import axios from "axios";
 
 const UploadResults = (props) => {
   const navigate = useNavigate();
@@ -49,20 +49,20 @@ const UploadResults = (props) => {
     for (var key of formData.entries()) {
       console.log(key[0] + ', ' + key[1]);
     }
-    // fetch("http://localhost:8080/uploadresults", {
-    //   method: "post",
-    //   headers: {
+    fetch("http://localhost:8080/uploadresults", {
+      method: "post",
+      headers: {
 
-    //     jwtkey: localStorage.getItem("jwtToken"),
-    //     // "Access-Control-Allow-Origin" : "*",
-    //   },
-    //   body: body,
-    // })
-    // .then((res) => res.json())
-    axios.post("http://localhost:8080/uploadresults", formData, {
-      headers: { jwtkey: localStorage.getItem("jwtToken") }
+        jwtkey: localStorage.getItem("jwtToken"),
+        // "Access-Control-Allow-Origin" : "*",
+      },
+      body: formData,
     })
-      .then(({ data }) => {
+      .then((res) => res.json())
+      // axios.post("http://localhost:8080/uploadresults", formData, {
+      //   headers: { jwtkey: localStorage.getItem("jwtToken") }
+      // })
+      .then((data) => {
         console.log(data);
         if (data.error) {
           // alert(data.error);

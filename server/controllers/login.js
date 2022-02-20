@@ -18,7 +18,8 @@ const jwtTokenGenerator = (userId) => {
 export const adminLogingIn = async (req, res) => {
   try {
     const { email, adminPassword } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
+
     let currAdmin = await Admins.findOne({ email });
     if (!currAdmin) {
       return sendError(res, "Invalid Email");
