@@ -9,7 +9,6 @@ import path from "path";
 export const uploadresults = async (req, res, next) => {
   try {
     const { year, group, semesterNumber } = req.body;
-    console.log(year);
 
     const batch = year + group;
     const studentsList = await Students.find({ batch });
