@@ -1,19 +1,20 @@
-import { React, useState,useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import css from "../css/UploadResults.module.css";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const UploadResults = (props) => {
   const navigate = useNavigate();
   const { configToast, isloggedIn } = props;
 
-  useEffect(()=>{
-    if(!isloggedIn){
+  useEffect(() => {
+    if (!isloggedIn) {
       navigate("/login", { replace: true });
     }
-  },[isloggedIn, navigate])
+  }, [isloggedIn, navigate])
 
   const [year, setYear] = useState("");
   const [group, setGroup] = useState("");
@@ -21,49 +22,67 @@ const UploadResults = (props) => {
   const [resultsFile, setResultsFile] = useState("");
   // const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const resultsUploadHandler = (event) => {
+  const resetStates = () => {
+    setYear('');
+    setGroup('');
+    setsSemesterNumber('');
+    setResultsFile('');
+  }
 
-    event.preventDefault();    
+  const resultsUploadHandler = (event) => {
+    event.preventDefault();
     configToast();
-    if(!year || !group || !semesterNumber || !resultsFile){
-      toast('Please fill all the fields');
+    const groups = ['IMT', 'BCS', 'IMG'];
+    if (!year || !group || !semesterNumber || !resultsFile) {
+      toast("Please fill all the fields");
       return;
     }
+    else if (year > 2030 || year < 1980 || semesterNumber > 10 || semesterNumber < 0 || !groups.includes(group)) {
+      toast("Enter valid inputs");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("resultsFile", resultsFile);
+    formData.append("year", year);
+    formData.append("group", group);
+    formData.append("semesterNumber", semesterNumber);
+    for (var key of formData.entries()) {
+      console.log(key[0] + ', ' + key[1]);
+    }
+    // fetch("http://localhost:8080/uploadresults", {
+    //   method: "post",
+    //   headers: {
 
-    const body = new FormData();
-    body.append('resultsFile', resultsFile);
-    body.append('year', year);
-    body.append('group', group);
-    body.append('semesterNumber',semesterNumber);
-    
-    fetch("http://localhost:8080/uploadresults", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        "jwtkey": localStorage.getItem("jwtToken"),
-        // "Access-Control-Allow-Origin" : "*",
-      },
-      body: JSON.stringify(body),
+    //     jwtkey: localStorage.getItem("jwtToken"),
+    //     // "Access-Control-Allow-Origin" : "*",
+    //   },
+    //   body: body,
+    // })
+    // .then((res) => res.json())
+    axios.post("http://localhost:8080/uploadresults", formData, {
+      headers: { jwtkey: localStorage.getItem("jwtToken") }
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(({ data }) => {
         console.log(data);
         if (data.error) {
           // alert(data.error);
           toast(data.error);
         } else {
           toast(data.message);
+          resetStates();
         }
       })
       .catch((err) => {
         console.log(err);
+        toast("Oops! Something went wrong 😥");
       });
   };
 
   return (
     <div className={css.container}>
-      
       <Form className={css.widget} encType="multipart/form-data">
+        <div className={css.heading}>Upload Results</div>
+
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Year</Form.Label>
           <Form.Control
@@ -79,14 +98,14 @@ const UploadResults = (props) => {
         <Form.Group className="mb-3">
           <Form.Label>Group</Form.Label>
           <Form.Control
-              className={css.inputs}
-              type="string"
-              placeholder="Enter group BCS/IMT/IMG "
-              value={group}
-              onChange={(event) => {
-                setGroup(event.target.value);
-              }}
-            />
+            className={css.inputs}
+            type="string"
+            placeholder="BCS/IMT/IMG "
+            value={group}
+            onChange={(event) => {
+              setGroup(event.target.value);
+            }}
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -94,7 +113,7 @@ const UploadResults = (props) => {
           <Form.Control
             value={semesterNumber}
             type="number"
-            placeholder="Enter Semester Number"
+            placeholder="Semester Number"
             onChange={(event) => {
               setsSemesterNumber(event.target.value);
             }}
@@ -114,12 +133,12 @@ const UploadResults = (props) => {
 
         <Button
           onClick={(event) => resultsUploadHandler(event)}
-          variant="primary"
+          variant="dark"
+          id={css.button}
           type="submit"
         >
           Submit
         </Button>
-
       </Form>
     </div>
   );

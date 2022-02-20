@@ -4,9 +4,11 @@ import { Table } from "react-bootstrap";
 
 const DisplayResults = (props) => {
   const { results, isloggedIn } = props;
-  const { sub1, sub2, sub3 } = JSON.parse(results);
+  // const results = { sub1: 100, sub2: 200, sub3: 400, sub4: 60, sub5: 90 };
+  // const { sub1, sub2, sub3 } = results;
 
-  console.log(Object.keys(results));
+  const grades = JSON.parse(results);
+  console.log(props, "hello", grades);
 
   const navigate = useNavigate();
 
@@ -35,23 +37,15 @@ const DisplayResults = (props) => {
         </tr>
       </thead>
       <tbody>
-        {/* {Object.keys(results).map((subject) => (
-          <tr>
-            <td>{subject}</td> <td> {results[subject]}</td>
-          </tr>
-        ))} */}
-        <tr>
-          <td>Subject1</td>
-          <td>{sub1}</td>
-        </tr>
-        <tr>
-          <td>Subject2</td>
-          <td>{sub2}</td>
-        </tr>
-        <tr>
-          <td>Subject3</td>
-          <td>{sub3}</td>
-        </tr>
+        {Object.keys(grades).map((subject) => {
+          if (subject !== 'rollnumber') {
+            return (
+              <tr>
+                <td>{subject}</td> <td> {grades[subject]}</td>
+              </tr>
+            )
+          } else return ''
+        })}
       </tbody>
     </Table>
   );

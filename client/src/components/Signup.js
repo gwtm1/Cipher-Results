@@ -60,7 +60,8 @@ const Signup = (props) => {
         if (data.error) {
           // alert(data.error);
           toast(data.error);
-          navigator("/signup");
+          // navigator("/signup");
+          setstates();
         } else {
           toast(data.message);
           setstates();
@@ -71,6 +72,7 @@ const Signup = (props) => {
       .catch((err) => {
         console.log(err);
         toast("Oops! Something went wrong 😥");
+        setstates();
       });
   };
 
@@ -80,14 +82,14 @@ const Signup = (props) => {
       className={css.mainrow}
     >
       <Row>
-        <Col style={{ marginLeft: "2rem" }} className={css.widget}>
+        <Col className={css.widget}>
           <Container className={css.formContainer}>
             <div className={css.form}>
-              <Container>
+              <div>
                 <Col className={css.heading}>
                   <h1>Signup</h1>
                 </Col>
-              </Container>
+              </div>
               <Form.Group className="mb-3" controlId="formBasicRollNumber">
                 <Form.Label>Roll Number</Form.Label>
                 <Form.Control
@@ -128,8 +130,8 @@ const Signup = (props) => {
                 />
               </Form.Group>
 
-              <Button variant="light" type="Send OTP" id={css.button}>
-                {loading ? "Loading..." : "Submit"}
+              <Button variant="light" type="submit" id={css.button}>
+                {loading ? "Loading..." : "Send OTP"}
               </Button>
 
               <p className={css.dividingLine}>&#8195;Or&#8195;</p>

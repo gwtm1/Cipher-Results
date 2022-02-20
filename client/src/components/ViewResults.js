@@ -1,21 +1,21 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import css from "../css/ViewResults.module.css";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 const NodeRSA = require("node-rsa");
 
 const ViewResults = (props) => {
   const navigate = useNavigate();
 
   const { userId, configToast, isloggedIn, collectResults } = props;
-  // useEffect(()=>{
-  //   if(!isloggedIn){
-  //     navigate("/login", { replace: true });
-  //   }
-  // },[isloggedIn, navigate])
-  
+  useEffect(() => {
+    if (!isloggedIn) {
+      navigate("/login", { replace: true });
+    }
+  }, [isloggedIn, navigate])
+
   const [semester, setSemester] = useState("");
   const [privateKey, setPrivateKey] = useState("");
 
@@ -23,11 +23,14 @@ const ViewResults = (props) => {
     event.preventDefault();
     configToast();
 
-    if(!userId || !semester || !privateKey){
-      toast('Please fill all the fields');
+    if (!userId || !semester || !privateKey) {
+      toast("Please fill all the fields");
       return;
     }
-
+    else if (semester > 10 || semester < 0) {
+      toast("Please enter a valid semester");
+      return;
+    }
     fetch("http://localhost:8080/viewresults", {
       method: "post",
       headers: {
@@ -41,7 +44,7 @@ const ViewResults = (props) => {
       .then((data) => {
         if (data.error) {
           // alert(data.error);
-          toast(data.error)
+          toast(data.error);
         } else {
           // complete this
           decryptResults(data);
@@ -49,16 +52,16 @@ const ViewResults = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        toast('Oops! Something went wrong 😥')
+        toast("Oops! Something went wrong 😥");
       });
   };
 
   const decryptResults = (data) => {
     const private_key = new NodeRSA(privateKey);
     const decryptedResult = private_key.decrypt(data.result, "utf8");
-    console.log(decryptedResult)
+    console.log(decryptedResult);
     collectResults(decryptedResult);
-    navigate("/viewresults/display", { replace: true })
+    navigate("/viewresults/display", { replace: true });
   };
 
   const onPrivateKeyFileChange = (event) => {
@@ -74,6 +77,7 @@ const ViewResults = (props) => {
   return (
     <div className={css.container}>
       <Form className={css.widget} encType="multipart/form-data">
+        <div className={css.heading}>Check Results</div>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Semester Number</Form.Label>
@@ -91,6 +95,7 @@ const ViewResults = (props) => {
           <Form.Label>Upload Private Key</Form.Label>
           <Form.Control
             type="file"
+            accept=".txt"
             onChange={(event) => {
               onPrivateKeyFileChange(event);
             }}
@@ -100,11 +105,11 @@ const ViewResults = (props) => {
         <Button
           variant="primary"
           onClick={(event) => resultsViewHandler(event)}
+          id={css.button}
           type="submit"
         >
           Submit
         </Button>
-
       </Form>
     </div>
   );
