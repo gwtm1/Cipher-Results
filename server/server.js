@@ -7,6 +7,9 @@ import login from "./routes/login.js";
 import uploadresults from "./routes/uploadresults.js";
 import dotenv from "dotenv";
 import viewresults from "./routes/viewresults.js";
+import multer from "multer";
+
+var upload = multer();
 dotenv.config();
 
 const mongodb_url = `mongodb+srv://${process.env.mongo_details}@cipher-results.5uw4z.mongodb.net/cipherResults?retryWrites=true&w=majority`;
@@ -22,9 +25,10 @@ mongoose
     const app = express();
     app.use(express.json());
     app.use(cors({ origin: true }));
-    
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
+
+    app.use(express.urlencoded({ extended: true }));
+    // app.use(upload.array());
+    // app.use(express.static("public"));
 
     // app.use((req, res, next) => {
     //   res.setHeader("Access-Control-Allow-Origin", "*");

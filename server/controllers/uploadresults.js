@@ -9,6 +9,7 @@ import path from "path";
 export const uploadresults = async (req, res, next) => {
   try {
     const { year, group, semesterNumber } = req.body;
+    console.log(year);
 
     const batch = year + group;
     const studentsList = await Students.find({ batch });
@@ -30,8 +31,8 @@ export const uploadresults = async (req, res, next) => {
     });
 
     grades.forEach(async (grade) => {
-      const student = await Students.findOne({rollnumber: grade.rollnumber})
-      if(!student){return}
+      const student = await Students.findOne({ rollnumber: grade.rollnumber })
+      if (!student) { return }
       const pubKey = new NodeRSA(keyMap.get(grade.rollnumber));
 
       let encryptedResult = pubKey
@@ -44,7 +45,7 @@ export const uploadresults = async (req, res, next) => {
       Students.findOneAndUpdate(filter, { $push: { results: result } }).exec();
     });
 
-    res.send({ message: "Results Successfully uploaded" });
+    res.status(200).send({ message: "Results Successfully uploaded" });
   } catch (error) {
     console.log(error.message);
   }

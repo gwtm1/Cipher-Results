@@ -7,12 +7,13 @@ export const verifyjwt = (req, res, next) => {
 
         const verified = jwt.verify(jwtkey, jwtSecretKey);
 
-        if(verified) {
+        if (verified) {
             // return res.send("Successfully Verified");
             // res.header('Access-Control-Allow-Origin', '*');
+            console.log(req.body, 'verified');
             next();
-        } 
-        else{
+        }
+        else {
             return res.status(401).send(error);
         }
     } catch (error) {

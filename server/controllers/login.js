@@ -4,20 +4,21 @@ import { sendError } from "../utils/helper.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcryptjs";
 
-const jwtTokenGenerator = (userId) =>{
+const jwtTokenGenerator = (userId) => {
   let jwtSecretKey = process.env.jwtSecretKey;
-    let data = {
-        time: Date.now(),
-        userId
-    }
-  
-    const token = jwt.sign(data, jwtSecretKey);
-    return token;
+  let data = {
+    time: Date.now(),
+    userId
+  }
+
+  const token = jwt.sign(data, jwtSecretKey);
+  return token;
 }
 
 export const adminLogingIn = async (req, res) => {
   try {
     const { email, adminPassword } = req.body;
+    console.log(req.body);
     let currAdmin = await Admins.findOne({ email });
     if (!currAdmin) {
       return sendError(res, "Invalid Email");

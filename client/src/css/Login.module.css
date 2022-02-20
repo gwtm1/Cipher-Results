@@ -1,71 +1,94 @@
-.mainrow{
+.mainrow {
   width: 100%;
-  height: auto;
   box-sizing: border-box;
+  /* display: flex; */
+  overflow: hidden;
+  height: 90%;
+  background: #fffffe;
+}
+
+.formContainer {
+  margin-top: 0.5rem;
+  padding: 3rem 5rem 5rem 5rem;
+}
+
+.heading {
   display: flex;
-  overflow:hidden;
-  min-height:100%;
+  justify-content: flex-start;
+  text-align: center;
+  background-color: #272343;
+  color: #fffffe;
+  font-family: "Josefin Sans";
+  padding-bottom: 1rem;
 }
 
 .widget {
-  border: 2px solid rgb(16, 206, 42);
-  border-radius: 4px;
-  position: relative;
-  display: block;
-  width: 100%;
-}
-
-.Logos {
-  text-align: center;
-  padding-top: 3rem;
+  padding: 3rem;
+  background-color: #272343;
+  color: #fffffe;
+  font-size: large;
+  border-radius: 5%;
 }
 
 .form {
-  padding-top: 2rem;
-  padding-left: 10rem;
-  padding-right: 10rem;
+  padding-top: 1.5rem;
 }
 
-.inputs {
-  background-color: bisque;
+.toggle {
+  cursor: pointer;
+  background-color: #ffd803;
+  color: #272343;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+  width: 40%;
+  text-align: center;
+}
+.toggle:hover {
+  box-shadow: 4px 4px #fffffe;
+  transform: scale(1.1);
+}
+
+#button {
+  background-color: #bae8e8;
+  color: #272343;
+  width: 40%;
+  margin-top: 1rem;
+  border: none;
 }
 
 .dividingLine {
-    display: flex;
-    flex-direction: row;
-    font-size: 20px;
-    font-weight: 20px;
-  }
-  
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  font-weight: 20px;
+  margin-top: 2rem;
+}
+
 .dividingLine:before,
 .dividingLine:after {
-content: "";
-flex: 1 1;
-border-bottom: 1px solid black;
-margin: auto;
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid white;
+  margin: auto;
 }
 
 .loginText {
-  color: rgb(148, 48, 148);
+  color: white;
+  text-decoration: none;
+}
+.loginText:hover {
+  color: #ffd803;
 }
 
-.active{
-  border-color: red;
-}
-.leftNav {
-  border-color: yellow;
-}
 .RightImage {
-  border: 2px solid rgb(99, 21, 224);
   border-radius: 4px;
+  padding: auto;
   background-image: url("../assets/registerImage.svg");
   background-repeat: no-repeat;
   background-position: center;
   width: 100%;
   height: 100%;
-}
-
-.Logo{
-  width: 4rem;
-  height: auto;
 }

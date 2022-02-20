@@ -67,7 +67,7 @@ export const studentSignUp = async (req, res) => {
 
     await verificationToken.save();
     await newstudent.save();
-    res.json({ userId: newstudent._id, message:'OTP sent to email' });
+    res.json({ userId: newstudent._id, message: 'OTP sent to email' });
 
     mailTransport().sendMail(
       {
@@ -97,7 +97,7 @@ export const verifyEmail = async (req, res) => {
   try {
     const { userId, OTP, publicKey } = req.body;
 
-    if (!userId || !OTP) return sendError(res, "Please enter a valid OTP!!");
+    if (!userId || !OTP) return sendError(res, "Invalid OTP!!");
 
     const student = await Students.findById(userId);
     if (!student) return sendError(res, "Sorry, User not found!!");
@@ -112,7 +112,7 @@ export const verifyEmail = async (req, res) => {
 
     student.isVerified = true;
     student.publicKey = publicKey;
-    
+
     await VerificationToken.findByIdAndDelete(token._id);
     await student.save();
 
