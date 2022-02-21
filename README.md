@@ -22,7 +22,7 @@ An **Exam Results Publishing System** developed with an _Asymmetric Key Encrypti
 
 - ### Login
 <p align="center">
-    <img src="./client/src/assets/adminlogin.png" width=75% title="Admin Login">
+    <img src="./client/src/assets/Adminlogin.png" width=75% title="Admin Login">
 </p>
 
 - ### Upload Results
