@@ -11,43 +11,6 @@
 An **Exam Results Publishing System** developed with an _Asymmetric Key Encryption_ based system to provide **confidentiality** for students.
 
 ---
-# Screenshots
-
-## Homepage
-<p align="center">
-    <img src="./client/src/assets/homepage.jpeg" width=80% title="Homepage">
-</p>
-
-## Admin
-
-- ### Login
-<p align="center">
-    <img src="./client/src/assets/Adminlogin.png" width=75% title="Admin Login">
-</p>
-
-- ### Upload Results
-<p align="center">
-    <img src="./client/src/assets/uploadresults.jpeg" width=75% title="Upload Results">
-    
-</p>
-
-## Student
-
-- ### Signup and Login
-<p align="center">
-    <img src="./client/src/assets/signup.jpeg" width=80% title="Signup">
-    <img src="./client/src/assets/login.jpeg" width=80% title="Login">
-</p>
-
-- ### OTP Verification Page
-<p align="center">
-    <img src="./client/src/assets/verification.jpeg" width=80% title="Verification">
-</p>
-
-- ### Check Results
-<p align="center">
-<img src="./client/src/assets/checkresults.jpeg" width=80% title="Check Results">    
-</p>
 
 # Hosted URL
 
@@ -136,6 +99,43 @@ You can visit our website here [CIPHER RESULTS](https://cipher-results.herokuapp
 ### Try It
 * Open you're browser to [http://localhost:3000](http://localhost:3000)
 
+# Screenshots
+
+## Homepage
+<p align="center">
+    <img src="./client/src/assets/homepage.jpeg" width=80% title="Homepage">
+</p>
+
+## Admin
+
+- ### Login
+<p align="center">
+    <img src="./client/src/assets/Adminlogin.png" width=75% title="Admin Login">
+</p>
+
+- ### Upload Results
+<p align="center">
+    <img src="./client/src/assets/uploadresults.jpeg" width=75% title="Upload Results">
+    
+</p>
+
+## Student
+
+- ### Signup and Login
+<p align="center">
+    <img src="./client/src/assets/signup.jpeg" width=80% title="Signup">
+    <img src="./client/src/assets/login.jpeg" width=80% title="Login">
+</p>
+
+- ### OTP Verification Page
+<p align="center">
+    <img src="./client/src/assets/verification.jpeg" width=80% title="Verification">
+</p>
+
+- ### Check Results
+<p align="center">
+<img src="./client/src/assets/checkresults.jpeg" width=80% title="Check Results">    
+</p>
 
 # Credits
 ## Team Members
