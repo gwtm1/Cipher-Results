@@ -97,7 +97,7 @@ You can visit our website here [CIPHER RESULTS](https://cipher-results.herokuapp
 ```
 
 ### Try It
-* Open you're browser to [http://localhost:3000](http://localhost:3000)
+* Open your browser and go to [http://localhost:3000](http://localhost:3000)
 
 # Screenshots
 
