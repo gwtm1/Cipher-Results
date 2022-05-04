@@ -12,7 +12,7 @@ import multer from "multer";
 var upload = multer();
 dotenv.config();
 
-const mongodb_url = `mongodb+srv://${process.env.mongo_details}@cipher-results.5uw4z.mongodb.net/cipherResults?retryWrites=true&w=majority`;
+const mongodb_url = `mongodb+srv://${process.env.mongo_details}@cluster0.4wylg.mongodb.net/cipherResults?retryWrites=true&w=majority`;
 // const mongodb_url = `mongodb+srv://jithendra:jithendra71@cipher-results.5uw4z.mongodb.net/`;
 
 const PORT = process.env.PORT || 8080;
